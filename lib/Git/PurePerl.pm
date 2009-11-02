@@ -89,7 +89,7 @@ sub BUILD {
     my $self = shift;
 
     unless ( -d $self->gitdir ) {
-        confess $self->directory . ' is not a directory';
+        confess $self->gitdir . ' is not a directory';
     }
     unless ( not defined $self->directory or -d $self->directory ) {
         confess $self->directory . ' is not a directory';
