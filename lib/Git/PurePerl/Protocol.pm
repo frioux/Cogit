@@ -15,7 +15,7 @@ sub connect {
         PeerAddr => $self->hostname,
         PeerPort => $self->port,
         Proto    => 'tcp'
-    ) || die $!;
+    ) || die $! . ' ' . $self->hostname . ':' . $self->port;
     $socket->autoflush(1) || die $!;
     $self->socket($socket);
 
