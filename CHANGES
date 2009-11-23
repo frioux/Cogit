@@ -1,12 +1,13 @@
 Revision history for Perl module Git::PurePerl:
 
-0.42_01 Mon Nov 23 11:44:51 GMT 2009
+0.42_01 Mon Nov 23 12:12:51 GMT 2009
      - allow put_object to update other heads than just 'master'
        (thanks to martijn)
      - Fix bug when the ref dirs are more than two levels deep
      - Fix commit object to support multiple parents.  This is seen in merge
        commits
      - Add object_kind method to tag objects.
+     - Change to MANIFEST.SKIP based dist building.
      - Dev release with version bump skipping 0.42 so that Gitalist can depend
        on >= 0.42 but we don't have to push a real release until I've done
        a little more maintainance work.

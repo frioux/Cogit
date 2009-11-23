@@ -4,6 +4,10 @@ use warnings;
 use Test::More;
 
 BEGIN {
+plan skip_all => 'Needs you to manually run a git daemon';
+
+exit 0;
+
     if ( $^O eq 'MSWin32' ) {
         plan skip_all => 'Windows does NOT have git-daemon yet';
     }
