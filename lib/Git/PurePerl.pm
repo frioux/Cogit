@@ -121,7 +121,7 @@ sub _ref_names_recursive {
         if ( -d $file ) {
             my $reldir  = $file->relative($dir);
             my $subbase = $base . $reldir . "/";
-            _ref_names_dir( $file, $subbase, $names );
+            _ref_names_recursive( $file, $subbase, $names );
         } else {
             push @$names, $base . $file->basename;
         }

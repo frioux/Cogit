@@ -7,7 +7,7 @@ extends 'Git::PurePerl::Object';
 has 'kind' =>
     ( is => 'ro', isa => 'ObjectKind', required => 1, default => 'commit' );
 has 'tree_sha1'   => ( is => 'rw', isa => 'Str', required => 0 );
-has 'parent_sha1' => ( is => 'rw', isa => 'Str', required => 0 );
+has 'parent_sha1s' => ( is => 'rw', isa => 'ArrayRef[Str]', required => 0, default => sub { [] });
 has 'author' => ( is => 'rw', isa => 'Git::PurePerl::Actor', required => 0 );
 has 'authored_time' => ( is => 'rw', isa => 'DateTime', required => 0 );
 has 'committer' =>
@@ -19,7 +19,7 @@ __PACKAGE__->meta->make_immutable;
 
 my %method_map = (
     'tree'      => 'tree_sha1',
-    'parent'    => 'parent_sha1',
+    'parent'    => '_push_parent_sha1',
     'author'    => 'authored_time',
     'committer' => 'committed_time'
 );
@@ -51,14 +51,32 @@ sub BUILD {
     $self->comment( join "\n", @lines );
 }
 
+
 sub tree {
     my $self = shift;
     return $self->git->get_object( $self->tree_sha1 );
 }
 
+
+sub _push_parent_sha1 {
+    my ($self, $sha1) = @_;
+  
+    push(@{$self->parent_sha1s}, $sha1);
+}
+
+sub parent_sha1 {
+    return shift->parent_sha1s->[0];
+}
+  
 sub parent {
     my $self = shift;
     return $self->git->get_object( $self->parent_sha1 );
+}
+
+sub parents {
+    my $self = shift;
+    
+    return map { $self->git->get_object( $_ ) } @{$self->parent_sha1s};
 }
 
 1;
