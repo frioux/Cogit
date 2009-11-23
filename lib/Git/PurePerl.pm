@@ -34,7 +34,7 @@ use Git::PurePerl::Protocol;
 use IO::Digest;
 use IO::Socket::INET;
 use Path::Class;
-our $VERSION = '0.41';
+our $VERSION = '0.42_01';
 
 has 'directory' => (
     is       => 'ro',
@@ -471,15 +471,31 @@ It was mostly based on Grit L<http://grit.rubyforge.org/>.
 
 =back
 
+=head1 MAINTAINANCE
+
+This module is maintained in git at L<http://github.com/bobtfish/git-pureperl/>.
+
+Patches are welcome, please come speak to one of the L<Gitalist> team
+on C<< #gitalist >>.
+
 =head1 AUTHOR
 
 Leon Brocard <acme@astray.com>
 
+=head1 CONTRIBUTORS
+
+    Chris Reinhardt
+    Tomas (t0m) Doran
+    Dan (broquaint) Brook
+
 =head1 COPYRIGHT
 
-Copyright (C) 2008, Leon Brocard.
+Copyright (C) 2008, Leon Brocard and the above mentioned contributors.
 
 =head1 LICENSE
 
-This module is free software; you can redistribute it or 
+This module is free software; you can redistribute it or
 modify it under the same terms as Perl itself.
+
+=cut
+
