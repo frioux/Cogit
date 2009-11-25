@@ -1,25 +1,26 @@
 #!perl
 use strict;
 use warnings;
-use ExtUtils::MakeMaker;
-WriteMakefile(
-    NAME         => 'Git::PurePerl',
-    VERSION_FROM => 'lib/Git/PurePerl.pm',
-    AUTHOR       => 'Leon Brocard <acme@astray.com>',
-    ABSTRACT     => 'A Pure Perl interface to Git repositories',
-    LICENSE      => 'perl',
-    PREREQ_PM    => {
-        'Archive::Extract'           => '0',
-        'Compress::Raw::Zlib'        => '0',
-        'Compress::Zlib'             => '0',
-        'Data::Stream::Bulk'         => '0',
-        'DateTime'                   => '0',
-        'Digest::SHA1'               => '0',
-        'File::Find::Rule'           => '0',
-        'IO::Digest',                => '0',
-        'Moose'                      => '0',
-        'MooseX::StrictConstructor'  => '0',
-        'MooseX::Types::Path::Class' => '0',
-    }
-);
+use inc::Module::Install 0.91;
 
+name 'Git-PurePerl';
+all_from 'lib/Git/PurePerl.pm';
+author 'Leon Brocard <acme@astray.com>';
+abstract 'A Pure Perl interface to Git repositories';
+license 'perl';
+
+resources repository => 'git://github.com/bobtfish/git-pureperl.git';
+
+requires        'Archive::Extract'           => '0';
+requires        'Compress::Raw::Zlib'        => '0';
+requires        'Compress::Zlib'             => '0';
+requires        'Data::Stream::Bulk'         => '0';
+requires        'DateTime'                   => '0';
+requires        'Digest::SHA1'               => '0';
+requires        'File::Find::Rule'           => '0';
+requires        'IO::Digest'                 => '0';
+requires        'Moose'                      => '0';
+requires        'MooseX::StrictConstructor'  => '0';
+requires        'MooseX::Types::Path::Class' => '0';
+
+WriteAll;
