@@ -163,7 +163,7 @@ sub ref_sha1 {
     my ( $self, $wantref ) = @_;
     my @refs;
     my $dir = dir( $self->gitdir, 'refs' );
-    next unless -d $dir;
+    return unless -d $dir;
     foreach my $file ( File::Find::Rule->new->file->in($dir) ) {
         my $ref = 'refs/' . file($file)->relative($dir)->as_foreign('Unix');
         if ( $ref eq $wantref ) {
