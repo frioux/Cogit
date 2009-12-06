@@ -1,5 +1,7 @@
 Revision history for Perl module Git::PurePerl:
 
+     - Fix ref_sha1 to return rather than calling next as not in a loop. (doy)
+
 0.43 Wed 25 Nov 2009 19:46:38 GMT
      - Switch to Module::Install so we can have repository metadata in
        META.yml
