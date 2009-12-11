@@ -5,7 +5,6 @@ use Moose::Util::TypeConstraints;
 
 use Git::PurePerl::Protocol::Git;
 use Git::PurePerl::Protocol::SSH;
-use Git::PurePerl::Protocol::SSH;
 
 has 'remote' => ( is => 'ro', isa => 'Str', required => 1 );
 has 'read_socket' => ( is => 'rw', required => 0 );
@@ -20,7 +19,8 @@ sub connect {
             hostname => $2,
             project => $3,
         );
-    } elsif ($self->remote =~ m{^(?:(.*?)@)?(.*?):(.*)}) {
+    } elsif ($self->remote =~ m{^ssh://(?:(.*?)@)?(.*?)(/.*)}
+                 or $self->remote =~ m{^(?:(.*?)@)?(.*?):(.*)}) {
         Git::PurePerl::Protocol::SSH->meta->rebless_instance(
             $self,
             $1 ? (username => $1) : (),
