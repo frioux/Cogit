@@ -382,6 +382,7 @@ sub init {
 
 sub checkout {
     my ( $self, $directory, $tree ) = @_;
+    $directory ||= $self->directory;
     $tree ||= $self->master->tree;
     confess("Missing tree") unless $tree;
     foreach my $directory_entry ( $tree->directory_entries ) {
