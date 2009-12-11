@@ -164,6 +164,16 @@ sub ref_sha1 {
     my @refs;
     my $dir = dir( $self->gitdir, 'refs' );
     return unless -d $dir;
+
+    if ($wantref eq "HEAD") {
+        my $file = file($self->gitdir, 'HEAD');
+        my $sha1 = file($file)->slurp
+            || confess("Error reading $file: $!");
+        chomp $sha1;
+        return $self->ref_sha1($1) if $sha1 =~ /^ref: (.*)/;
+        return $sha1;
+    }
+
     foreach my $file ( File::Find::Rule->new->file->in($dir) ) {
         my $ref = 'refs/' . file($file)->relative($dir)->as_foreign('Unix');
         if ( $ref eq $wantref ) {
@@ -202,6 +212,16 @@ sub master_sha1 {
 sub master {
     my $self = shift;
     return $self->ref('refs/heads/master');
+}
+
+sub head_sha1 {
+    my $self = shift;
+    return $self->ref_sha1('HEAD');
+}
+
+sub head {
+    my $self = shift;
+    return $self->ref('HEAD');
 }
 
 sub get_object {
