@@ -5,6 +5,7 @@ use Moose::Util::TypeConstraints;
 
 use Git::PurePerl::Protocol::Git;
 use Git::PurePerl::Protocol::SSH;
+use Git::PurePerl::Protocol::File;
 
 has 'remote' => ( is => 'ro', isa => 'Str', required => 1 );
 has 'read_socket' => ( is => 'rw', required => 0 );
@@ -18,6 +19,11 @@ sub connect {
             $self,
             hostname => $2,
             project => $3,
+        );
+    } elsif ($self->remote =~ m{^file://(/.*)}) {
+        Git::PurePerl::Protocol::File->meta->rebless_instance(
+            $self,
+            path => $1,
         );
     } elsif ($self->remote =~ m{^ssh://(?:(.*?)@)?(.*?)(/.*)}
                  or $self->remote =~ m{^(?:(.*?)@)?(.*?):(.*)}) {
