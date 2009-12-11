@@ -170,6 +170,7 @@ sub ref_sha1 {
             my $sha1 = file($file)->slurp
                 || confess("Error reading $file: $!");
             chomp $sha1;
+            return $self->ref_sha1($1) if $sha1 =~ /^ref: (.*)/;
             return $sha1;
         }
     }
@@ -180,6 +181,7 @@ sub ref_sha1 {
             next if $line =~ /^#/;
             my ( $sha1, my $name ) = split ' ', $line;
             if ( $name eq $wantref ) {
+                return $self->ref_sha1($1) if $sha1 =~ /^ref: (.*)/;
                 return $sha1;
             }
         }
