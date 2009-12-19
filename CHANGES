@@ -1,6 +1,11 @@
 Revision history for Perl module Git::PurePerl:
 
+0.44 Sat 19th Dec 15:31:00 GMT
      - Fix ref_sha1 to return rather than calling next as not in a loop. (doy)
+     - Add support for the special HEAD ref, and associated head and
+       head_sha1 methods
+     - Grok symbolic references
+     - Default to the current directory in the checkout method
 
 0.43 Wed 25 Nov 2009 19:46:38 GMT
      - Switch to Module::Install so we can have repository metadata in

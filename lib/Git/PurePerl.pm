@@ -34,7 +34,7 @@ use Git::PurePerl::Protocol;
 use IO::Digest;
 use IO::Socket::INET;
 use Path::Class;
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 $VERSION = eval $VERSION;
 
 has 'directory' => (
@@ -511,6 +511,7 @@ Leon Brocard <acme@astray.com>
     Chris Reinhardt
     Tomas (t0m) Doran
     Dan (broquaint) Brook
+    Alex Vandiver
 
 =head1 COPYRIGHT
 
