@@ -38,6 +38,7 @@ sub put_object {
     $filename->parent->mkpath;
     my $compressed = compress( $object->raw );
     my $fh         = $filename->openw;
+    binmode($fh); #important for Win32
     $fh->print($compressed) || die "Error writing to $filename: $!";
 }
 

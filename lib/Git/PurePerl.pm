@@ -34,7 +34,7 @@ use Git::PurePerl::Protocol;
 use IO::Digest;
 use IO::Socket::INET;
 use Path::Class;
-our $VERSION = '0.44';
+our $VERSION = '0.45';
 $VERSION = eval $VERSION;
 
 has 'directory' => (
@@ -450,6 +450,7 @@ sub clone {
 sub _add_file {
     my ( $class, $filename, $contents ) = @_;
     my $fh = $filename->openw || confess "Error opening to $filename: $!";
+    binmode($fh); #important for Win32
     $fh->print($contents) || confess "Error writing to $filename: $!";
     $fh->close || confess "Error closing $filename: $!";
 }

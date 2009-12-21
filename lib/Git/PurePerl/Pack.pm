@@ -26,6 +26,7 @@ my $SHA1Size = 20;
 sub BUILD {
     my $self = shift;
     my $fh = IO::File->new( $self->filename ) || confess($!);
+    $fh->binmode();
     $self->fh($fh);
 }
 
@@ -91,7 +92,7 @@ sub read_compressed {
         $fh->read( my $block, 4096 ) || die $!;
         my $status = $deflate->inflate( $block, $out );
     }
-    confess "$out is not $size" unless length($out) == $size;
+    confess length($out)." is not $size" unless length($out) == $size;
 
     $fh->seek( $offset + $deflate->total_in, 0 ) || die $!;
     return $out;

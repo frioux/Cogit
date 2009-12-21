@@ -17,6 +17,7 @@ sub BUILD {
     $self->index_filename($index_filename);
 
     my $index_fh = IO::File->new($index_filename) || confess($!);
+    $index_fh->binmode();
     $index_fh->read( my $signature, 4 );
     $index_fh->read( my $version,   4 );
     $version = unpack( 'N', $version );
