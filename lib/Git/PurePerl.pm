@@ -10,6 +10,7 @@ use DateTime;
 use Digest::SHA1;
 use File::Find::Rule;
 use Git::PurePerl::Actor;
+use Git::PurePerl::Config;
 use Git::PurePerl::DirectoryEntry;
 use Git::PurePerl::Loose;
 use Git::PurePerl::Object;
@@ -73,6 +74,16 @@ has 'description' => (
     default => sub {
         my $self = shift;
         file( $self->gitdir, 'description' )->slurp( chomp => 1 );
+    }
+);
+
+has 'config' => (
+    is      => 'ro',
+    isa     => 'Git::PurePerl::Config',
+    lazy    => 1,
+    default => sub {
+        my $self = shift;
+        Git::PurePerl::Config->new(git => $self);
     }
 );
 

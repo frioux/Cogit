@@ -14,6 +14,7 @@ resources repository => 'git://github.com/bobtfish/git-pureperl.git';
 requires        'Archive::Extract'           => '0';
 requires        'Compress::Raw::Zlib'        => '0';
 requires        'Compress::Zlib'             => '0';
+requires        'Config::GitLike'            => '0';
 requires        'Data::Stream::Bulk'         => '0';
 requires        'DateTime'                   => '0';
 requires        'Digest::SHA1'               => '0';
