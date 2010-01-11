@@ -11,7 +11,6 @@ exit 0;
     if ( $^O eq 'MSWin32' ) {
         plan skip_all => 'Windows does NOT have git-daemon yet';
     }
-    plan tests => 14;
 }
 use Git::PurePerl;
 use IO::File;
@@ -45,3 +44,5 @@ is( $commit->author->email,    'you@yourdomain.example.com' );
 is( $commit->committer->name,  'Your Name Comes Here' );
 is( $commit->committer->email, 'you@yourdomain.example.com' );
 is( $commit->comment,          'add again' );
+
+done_testing;

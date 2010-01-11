@@ -24,4 +24,6 @@ requires        'Moose'                      => '0';
 requires        'MooseX::StrictConstructor'  => '0';
 requires        'MooseX::Types::Path::Class' => '0';
 
+test_requires   'Test::More'                 => '0.88';
+
 WriteAll;

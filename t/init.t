@@ -1,7 +1,7 @@
 #!perl
 use strict;
 use warnings;
-use Test::More tests => 97;
+use Test::More;
 use Git::PurePerl;
 use Path::Class;
 
@@ -168,3 +168,5 @@ for my $directory (qw(test-init test-init-bare.git)) {
     is( $git->all_sha1s->all,   7, 'contains seven sha1s' );
     is( $git->all_objects->all, 7, 'contains seven objects' );
 }
+
+done_testing;

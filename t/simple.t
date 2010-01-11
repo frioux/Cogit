@@ -1,7 +1,7 @@
 #!perl
 use strict;
 use warnings;
-use Test::More tests => 201;
+use Test::More;
 use Git::PurePerl;
 use Path::Class;
 
@@ -124,3 +124,5 @@ hello world, again
         'have ref master'
     );
 }
+
+done_testing;
