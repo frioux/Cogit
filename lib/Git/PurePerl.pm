@@ -35,6 +35,8 @@ use Git::PurePerl::Protocol;
 use IO::Digest;
 use IO::Socket::INET;
 use Path::Class;
+use namespace::autoclean;
+
 our $VERSION = '0.45';
 $VERSION = eval $VERSION;
 

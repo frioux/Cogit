@@ -2,6 +2,8 @@ package Git::PurePerl::NewObject::Tree;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
+
 extends 'Git::PurePerl::NewObject';
 
 has 'kind' =>
@@ -12,8 +14,6 @@ has 'directory_entries' => (
     required   => 1,
     auto_deref => 1,
 );
-
-__PACKAGE__->meta->make_immutable;
 
 sub _build_content {
     my $self = shift;
@@ -27,4 +27,5 @@ sub _build_content {
     $self->content($content);
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+

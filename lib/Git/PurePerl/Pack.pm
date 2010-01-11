@@ -4,12 +4,11 @@ use MooseX::StrictConstructor;
 use MooseX::Types::Path::Class;
 use Compress::Raw::Zlib;
 use IO::File;
+use namespace::autoclean;
 
 has 'filename' =>
     ( is => 'ro', isa => 'Path::Class::File', required => 1, coerce => 1 );
 has 'fh' => ( is => 'rw', isa => 'IO::File', required => 0 );
-
-__PACKAGE__->meta->make_immutable;
 
 my @TYPES = ( 'none', 'commit', 'tree', 'blob', 'tag', '', 'ofs_delta',
     'ref_delta' );
@@ -206,6 +205,5 @@ sub patch_delta_header_size {
     return ( $size, $pos );
 }
 
+__PACKAGE__->meta->make_immutable;
 
-
-1;

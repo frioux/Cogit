@@ -2,6 +2,8 @@ package Git::PurePerl::NewObject::Tag;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
+
 extends 'Git::PurePerl::NewObject';
 
 has 'kind' =>

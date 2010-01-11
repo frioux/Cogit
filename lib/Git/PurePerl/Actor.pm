@@ -2,6 +2,7 @@ package Git::PurePerl::Actor;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
 
 has 'name'  => ( is => 'ro', isa => 'Str', required => 1 );
 has 'email' => ( is => 'ro', isa => 'Str', required => 1 );

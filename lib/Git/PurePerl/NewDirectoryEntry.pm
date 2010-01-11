@@ -2,6 +2,7 @@ package Git::PurePerl::NewDirectoryEntry;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
 
 has 'mode'     => ( is => 'ro', isa => 'Str',           required => 1 );
 has 'filename' => ( is => 'ro', isa => 'Str',           required => 1 );

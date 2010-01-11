@@ -23,6 +23,7 @@ requires        'IO::Digest'                 => '0';
 requires        'Moose'                      => '0';
 requires        'MooseX::StrictConstructor'  => '0';
 requires        'MooseX::Types::Path::Class' => '0';
+requires 'namespace::autoclean';
 
 test_requires   'Test::More'                 => '0.88';
 

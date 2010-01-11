@@ -2,6 +2,7 @@ package Git::PurePerl::Config;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
 
 extends 'Config::GitLike';
 

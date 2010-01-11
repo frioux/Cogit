@@ -2,6 +2,7 @@ package Git::PurePerl::Protocol;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
 
 has 'hostname' => ( is => 'ro', isa => 'Str', required => 1 );
 has 'port'    => ( is => 'ro', isa => 'Int', required => 0, default => 9418 );
@@ -114,4 +115,4 @@ sub read_line {
     return $data;
 }
 
-1;
+__PACKAGE__->meta->make_immutable;

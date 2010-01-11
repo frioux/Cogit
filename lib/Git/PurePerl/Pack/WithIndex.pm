@@ -1,14 +1,14 @@
 package Git::PurePerl::Pack::WithIndex;
 use Moose;
 use MooseX::StrictConstructor;
+use namespace::autoclean;
+
 extends 'Git::PurePerl::Pack';
 
 has 'index_filename' =>
     ( is => 'rw', isa => 'Path::Class::File', required => 0, coerce => 1 );
 has 'index' =>
     ( is => 'rw', isa => 'Git::PurePerl::PackIndex', required => 0 );
-
-__PACKAGE__->meta->make_immutable;
 
 sub BUILD {
     my $self = shift;
@@ -49,4 +49,5 @@ sub get_object {
     return $self->unpack_object($offset);
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+

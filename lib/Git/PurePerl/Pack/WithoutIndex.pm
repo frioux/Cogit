@@ -1,11 +1,11 @@
 package Git::PurePerl::Pack::WithoutIndex;
 use Moose;
 use MooseX::StrictConstructor;
+use namespace::autoclean;
+
 extends 'Git::PurePerl::Pack';
 
 has 'offsets' => ( is => 'rw', isa => 'HashRef', required => 0 );
-
-__PACKAGE__->meta->make_immutable;
 
 my @TYPES = ( 'none', 'commit', 'tree', 'blob', 'tag', '', 'ofs_delta',
     'ref_delta' );
@@ -116,4 +116,5 @@ sub get_object {
     return $self->unpack_object($offset);
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+

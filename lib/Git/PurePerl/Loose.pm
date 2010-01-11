@@ -4,6 +4,7 @@ use MooseX::StrictConstructor;
 use MooseX::Types::Path::Class;
 use Compress::Zlib qw(compress uncompress);
 use Path::Class;
+use namespace::autoclean;
 
 has 'directory' => (
     is       => 'ro',
@@ -11,8 +12,6 @@ has 'directory' => (
     required => 1,
     coerce   => 1
 );
-
-__PACKAGE__->meta->make_immutable;
 
 sub get_object {
     my ( $self, $sha1 ) = @_;
@@ -58,4 +57,5 @@ sub all_sha1s {
     );
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+

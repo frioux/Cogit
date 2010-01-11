@@ -1,9 +1,9 @@
 package Git::PurePerl::PackIndex::Version2;
 use Moose;
 use MooseX::StrictConstructor;
+use namespace::autoclean;
 
 extends 'Git::PurePerl::PackIndex';
-__PACKAGE__->meta->make_immutable;
 
 my $FanOutCount   = 256;
 my $SHA1Size      = 20;
@@ -89,4 +89,5 @@ sub get_object_offset {
     return;
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+

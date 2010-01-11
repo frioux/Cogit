@@ -3,6 +3,8 @@ use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use DateTime;
+use namespace::autoclean;
+
 extends 'Git::PurePerl::NewObject';
 
 has 'kind' =>
@@ -15,8 +17,6 @@ has 'committer' =>
     ( is => 'rw', isa => 'Git::PurePerl::Actor', required => 1 );
 has 'committed_time' => ( is => 'rw', isa => 'DateTime', required => 1 );
 has 'comment'        => ( is => 'rw', isa => 'Str',      required => 1 );
-
-__PACKAGE__->meta->make_immutable;
 
 sub _build_content {
     my $self = shift;
@@ -47,4 +47,5 @@ sub _build_content {
     $self->content($content);
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+

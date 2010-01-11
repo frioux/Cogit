@@ -2,6 +2,8 @@ package Git::PurePerl::Object::Commit;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
+
 extends 'Git::PurePerl::Object';
 
 has 'kind' =>
@@ -14,8 +16,6 @@ has 'committer' =>
     ( is => 'rw', isa => 'Git::PurePerl::Actor', required => 0 );
 has 'committed_time' => ( is => 'rw', isa => 'DateTime', required => 0 );
 has 'comment'        => ( is => 'rw', isa => 'Str',      required => 0 );
-
-__PACKAGE__->meta->make_immutable;
 
 my %method_map = (
     'tree'      => 'tree_sha1',
@@ -79,4 +79,5 @@ sub parents {
     return map { $self->git->get_object( $_ ) } @{$self->parent_sha1s};
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+

@@ -2,6 +2,8 @@ package Git::PurePerl::Object::Tree;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
+
 extends 'Git::PurePerl::Object';
 
 has 'kind' =>
@@ -12,8 +14,6 @@ has 'directory_entries' => (
     required   => 0,
     auto_deref => 1,
 );
-
-__PACKAGE__->meta->make_immutable;
 
 sub BUILD {
     my $self    = shift;
@@ -40,4 +40,5 @@ sub BUILD {
     $self->directory_entries( \@directory_entries );
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+

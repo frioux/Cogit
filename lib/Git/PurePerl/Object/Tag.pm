@@ -2,6 +2,8 @@ package Git::PurePerl::Object::Tag;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
+
 extends 'Git::PurePerl::Object';
 
 has 'kind' =>
@@ -13,9 +15,6 @@ has 'tagged_time' => ( is => 'rw', isa => 'DateTime', required => 0 );
 has 'comment' => ( is => 'rw', isa => 'Str', required => 0 );
 has 'object_kind' =>
     ( is => 'rw', isa => 'ObjectKind', required => 0);
-
-
-__PACKAGE__->meta->make_immutable;
 
 my %method_map = (type => 'object_kind');
 
@@ -43,4 +42,5 @@ sub BUILD {
     $self->comment( join "\n", @lines );
 }
 
-1;
+__PACKAGE__->meta->make_immutable;
+
