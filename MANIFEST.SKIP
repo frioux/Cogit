@@ -10,6 +10,7 @@ Makefile\.old$
 \.shipit
 ^test-init-bare.git$
 ^t/checkout$
+^test-encoding/.*$
 ^test-project-packs/.*$
 ^test-project-packs2/.*$
 ^test-project/.*$
