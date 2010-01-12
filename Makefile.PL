@@ -26,5 +26,6 @@ requires        'MooseX::Types::Path::Class' => '0';
 requires 'namespace::autoclean';
 
 test_requires   'Test::More'                 => '0.88';
+test_requires   'Test::utf8'                 => '0.02';
 
 WriteAll;

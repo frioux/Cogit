@@ -4,7 +4,7 @@ use warnings;
 use Test::More;
 use Archive::Extract;
 
-foreach my $name qw(test-project test-project-packs test-project-packs2) {
+foreach my $name qw(test-project test-project-packs test-project-packs2 test-encoding) {
     next if -d $name;
     my $ae = Archive::Extract->new( archive => "$name.tgz" );
     $ae->extract;
