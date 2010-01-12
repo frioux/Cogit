@@ -2,6 +2,7 @@ Revision history for Perl module Git::PurePerl:
 
      - Add config file handling via Config::GitLike
      - Fix a couple of memory leaks due to unweakened circular references.
+     - Handle commit object character encoding correctly
 
 0.45 Mon 21st Dec 12:36:29 GMT 2009
      - Be Win32 compatible (RT#52677), patch contributed by kmx.

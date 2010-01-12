@@ -522,10 +522,19 @@ Leon Brocard <acme@astray.com>
 
 =head1 CONTRIBUTORS
 
-    Chris Reinhardt
-    Tomas (t0m) Doran
-    Dan (broquaint) Brook
-    Alex Vandiver
+=over 4
+
+=item Chris Reinhardt
+
+=item Tomas (t0m) Doran
+
+=item Dan (broquaint) Brook
+
+=item Alex Vandiver
+
+=item Dagfinn Ilmari MannsE<aring>ker
+
+=back
 
 =head1 COPYRIGHT
 
