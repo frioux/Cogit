@@ -1,5 +1,8 @@
 Revision history for Perl module Git::PurePerl:
 
+0.47
+     - Add support for ssh:// and file:// protocols (Alex Vandiver)
+
 0.46 Tue 12 Jan 01:09:00 GMT 2010
      - Add config file handling via Config::GitLike
      - Fix a couple of memory leaks due to unweakened circular references.
