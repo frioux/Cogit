@@ -2,6 +2,7 @@ package Git::PurePerl::Protocol::Git;
 use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
+use namespace::autoclean;
 
 extends 'Git::PurePerl::Protocol';
 
