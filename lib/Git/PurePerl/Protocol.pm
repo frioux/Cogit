@@ -4,27 +4,39 @@ use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 
-has 'hostname' => ( is => 'ro', isa => 'Str', required => 1 );
-has 'port'    => ( is => 'ro', isa => 'Int', required => 0, default => 9418 );
-has 'project' => ( is => 'ro', isa => 'Str', required => 1 );
-has 'socket' => ( is => 'rw', isa => 'IO::Socket', required => 0 );
+use Git::PurePerl::Protocol::Git;
+use Git::PurePerl::Protocol::SSH;
+use Git::PurePerl::Protocol::File;
+
+has 'remote' => ( is => 'ro', isa => 'Str', required => 1 );
+has 'read_socket' => ( is => 'rw', required => 0 );
+has 'write_socket' => ( is => 'rw', required => 0 );
 
 sub connect {
     my $self = shift;
 
-    my $socket = IO::Socket::INET->new(
-        PeerAddr => $self->hostname,
-        PeerPort => $self->port,
-        Proto    => 'tcp'
-    ) || die $! . ' ' . $self->hostname . ':' . $self->port;
-    $socket->autoflush(1) || die $!;
-    $self->socket($socket);
+    if ($self->remote =~ m{^git://(.*?@)?(.*?)(/.*)}) {
+        Git::PurePerl::Protocol::Git->meta->rebless_instance(
+            $self,
+            hostname => $2,
+            project => $3,
+        );
+    } elsif ($self->remote =~ m{^file://(/.*)}) {
+        Git::PurePerl::Protocol::File->meta->rebless_instance(
+            $self,
+            path => $1,
+        );
+    } elsif ($self->remote =~ m{^ssh://(?:(.*?)@)?(.*?)(/.*)}
+                 or $self->remote =~ m{^(?:(.*?)@)?(.*?):(.*)}) {
+        Git::PurePerl::Protocol::SSH->meta->rebless_instance(
+            $self,
+            $1 ? (username => $1) : (),
+            hostname => $2,
+            path => $3,
+        );
+    }
 
-    $self->send_line( "git-upload-pack "
-            . $self->project
-            . "\0host="
-            . $self->hostname
-            . "\0" );
+    $self->connect_socket;
 
     my %sha1s;
     while ( my $line = $self->read_line() ) {
@@ -78,19 +90,34 @@ sub send_line {
     my $text = $prefix . $line;
 
     # warn "$text";
-    $self->socket->print($text) || die $!;
+    $self->write_socket->print($text) || die $!;
+}
+
+sub read {
+    my $self = shift;
+    my $len = shift;
+
+    my $ret = "";
+    use bytes;
+    while (1) {
+        my $got = $self->read_socket->read( my $data, $len - length($ret));
+        if (not defined $got) {
+            die "error: $!";
+        } elsif ( $got == 0) {
+            die "EOF"
+        }
+        $ret .= $data;
+        if (length($ret) == $len) {
+            return $ret;
+        }
+    }
 }
 
 sub read_line {
     my $self   = shift;
-    my $socket = $self->socket;
+    my $socket = $self->read_socket;
 
-    my $ret = $socket->read( my $prefix, 4 );
-    if ( not defined $ret ) {
-        die "error: $!";
-    } elsif ( $ret == 0 ) {
-        die "EOF";
-    }
+    my $prefix = $self->read( 4 );
 
     return if $prefix eq '0000';
 
@@ -110,9 +137,7 @@ sub read_line {
         }
     }
 
-    #say "len $len";
-    $socket->read( my $data, $len - 4 ) || die $!;
-    return $data;
+    return $self->read( $len - 4 );
 }
 
 __PACKAGE__->meta->make_immutable;
