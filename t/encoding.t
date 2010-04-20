@@ -7,7 +7,10 @@ use Test::utf8;
 
 my $git = Git::PurePerl->new( directory => "test-encoding" );
 
-for ([$git->master, "utf-8", $git->master->parent, "iso-8859-1"]) {
+for (
+    [$git->master, "utf-8"],
+    [$git->master->parent, "iso-8859-1"],
+) {
     my ($commit, $encoding) = @{$_};
     is( $commit->encoding, $encoding );
     for my $role (qw(author committer)) {
