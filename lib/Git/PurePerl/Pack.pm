@@ -8,7 +8,8 @@ use namespace::autoclean;
 
 has 'filename' =>
     ( is => 'ro', isa => 'Path::Class::File', required => 1, coerce => 1 );
-has 'fh' => ( is => 'rw', isa => 'IO::File', required => 0 );
+has 'fh' =>
+    ( is => 'rw', isa => 'IO::File', required => 0, lazy_build => 1 );
 
 my @TYPES = ( 'none', 'commit', 'tree', 'blob', 'tag', '', 'ofs_delta',
     'ref_delta' );
@@ -22,11 +23,11 @@ my $OBJ_REF_DELTA = 7;
 
 my $SHA1Size = 20;
 
-sub BUILD {
+sub _build_fh {
     my $self = shift;
     my $fh = IO::File->new( $self->filename ) || confess($!);
     $fh->binmode();
-    $self->fh($fh);
+    return $fh;
 }
 
 sub all_sha1s {
