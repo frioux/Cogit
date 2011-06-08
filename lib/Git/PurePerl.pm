@@ -155,6 +155,7 @@ sub ref_names {
     if ( -f $packed_refs ) {
         foreach my $line ( $packed_refs->slurp( chomp => 1 ) ) {
             next if $line =~ /^#/;
+            next if $line =~ /^\^/;
             my ( $sha1, my $name ) = split ' ', $line;
             push @names, $name;
         }
