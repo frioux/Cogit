@@ -198,11 +198,20 @@ sub ref_sha1 {
 
     my $packed_refs = file( $self->gitdir, 'packed-refs' );
     if ( -f $packed_refs ) {
+        my $last_name;
+        my $last_sha1;
         foreach my $line ( $packed_refs->slurp( chomp => 1 ) ) {
             next if $line =~ /^#/;
             my ( $sha1, my $name ) = split ' ', $line;
-            return _ensure_sha1_is_sha1( $self, $sha1 ) if $name eq $wantref;
+            $sha1 =~ s/^\^//;
+            $name ||= $last_name;
+
+            return _ensure_sha1_is_sha1( $self, $last_sha1 ) if $last_name and $last_name eq $wantref and $name ne $wantref;
+
+            $last_name = $name;
+            $last_sha1 = $sha1;
         }
+        return _ensure_sha1_is_sha1( $self, $last_sha1 ) if $last_name eq $wantref;
     }
     return undef;
 }
