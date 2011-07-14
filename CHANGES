@@ -1,5 +1,15 @@
 Revision history for Perl module Git::PurePerl:
 
+0.48 Thu Jul 14 22:53:55 BST 2011
+     - Translation from Digest::SHA1 to Digest::SHA (Jonas Genannt)
+     - A git object can also be of zero size. (Christian Walde)
+     - Only the last SHA1 for any given ref is returned from
+       ref_sha1() (Christian Walde)
+     - Make sure zlib data is always read as-is (Christian Walde)
+
+0.47 Wed Aug 11 13:29:06 BST 2010
+     - Lazily build the fh attribute of Git::PurePerl::Pack objects.
+
 0.46_01 Sat 16 Jan 13:42:00 GMT 2010
      - Add support for ssh:// and file:// protocols (Alex Vandiver)
 
