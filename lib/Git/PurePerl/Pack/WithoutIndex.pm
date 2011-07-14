@@ -16,7 +16,7 @@ sub create_index {
     $index_filename =~ s/\.pack/.idx/;
     my $index_fh = IO::File->new("> $index_filename") || die $!;
 
-    my $iod = IO::Digest->new( $index_fh, 'SHA1' );
+    my $iod = IO::Digest->new( $index_fh, 'SHA' );
 
     my $offsets = $self->create_index_offsets;
     my @fan_out_table;
@@ -100,7 +100,7 @@ sub create_index_offsets {
         }
 
         my $raw  = $type . ' ' . $size . "\0" . $content;
-        my $sha1 = Digest::SHA1->new;
+        my $sha1 = Digest::SHA->new;
         $sha1->add($raw);
         my $sha1_hex = $sha1->hexdigest;
         $offsets{$sha1_hex} = $obj_offset;

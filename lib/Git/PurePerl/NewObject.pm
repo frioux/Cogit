@@ -13,7 +13,7 @@ has 'sha1'    => ( is => 'ro', isa => 'Str', required => 0, lazy_build => 1 );
 
 sub _build_sha1 {
     my $self = shift;
-    my $sha1 = Digest::SHA1->new;
+    my $sha1 = Digest::SHA->new;
     $sha1->add( $self->raw );
     my $sha1_hex = $sha1->hexdigest;
     return $sha1_hex;

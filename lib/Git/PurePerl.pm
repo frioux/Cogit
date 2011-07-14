@@ -7,7 +7,7 @@ use Data::Stream::Bulk;
 use Data::Stream::Bulk::Array;
 use Data::Stream::Bulk::Path::Class;
 use DateTime;
-use Digest::SHA1;
+use Digest::SHA;
 use File::Find::Rule;
 use Git::PurePerl::Actor;
 use Git::PurePerl::Config;

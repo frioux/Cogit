@@ -17,7 +17,6 @@ requires        'Compress::Zlib'             => '0';
 requires        'Config::GitLike'            => '0';
 requires        'Data::Stream::Bulk'         => '0';
 requires        'DateTime'                   => '0';
-requires        'Digest::SHA1'               => '0';
 requires        'File::Find::Rule'           => '0';
 requires        'IO::Digest'                 => '0';
 requires        'Moose'                      => '0';
