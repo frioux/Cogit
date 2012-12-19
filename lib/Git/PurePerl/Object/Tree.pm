@@ -15,6 +15,18 @@ has 'directory_entries' => (
     auto_deref => 1,
 );
 
+sub _build_content {
+    my $self = shift;
+    my $content;
+    foreach my $de ( $self->directory_entries ) {
+        $content
+            .= $de->mode . ' '
+            . $de->filename . "\0"
+            . pack( 'H*', $de->sha1 );
+    }
+    $self->content($content);
+}
+
 sub BUILD {
     my $self    = shift;
     my $content = $self->content;
@@ -34,7 +46,11 @@ sub BUILD {
             mode     => $mode,
             filename => $filename,
             sha1     => $sha1,
-            git      => $self->git,
+            (
+               $self->git
+                  ? (git => $self->git)
+                  : ()
+            ),
             );
     }
     $self->directory_entries( \@directory_entries );

@@ -7,10 +7,32 @@ use namespace::autoclean;
 enum 'ObjectKind' => qw(commit tree blob tag);
 
 has 'kind'    => ( is => 'ro', isa => 'ObjectKind',    required => 1 );
-has 'size'    => ( is => 'ro', isa => 'Int',           required => 1 );
-has 'content' => ( is => 'rw', isa => 'Str',           required => 1 );
-has 'sha1'    => ( is => 'ro', isa => 'Str',           required => 1 );
-has 'git'     => ( is => 'ro', isa => 'Git::PurePerl', required => 1, weak_ref => 1 );
+
+# TODO: make this required later
+has 'content' => ( is => 'rw', lazy_build => 1, predicate => 'has_content'  );
+
+has 'size'    => ( is => 'ro', isa => 'Int', lazy_build =>1, required => 0 );
+has 'sha1'    => ( is => 'ro', isa => 'Str', lazy_build =>1, required => 0 );
+
+has 'git'     => ( is => 'rw', isa => 'Git::PurePerl', required => 0, weak_ref => 1 );
+
+sub _build_sha1 {
+    my $self = shift;
+    my $sha1 = Digest::SHA->new;
+    $sha1->add( $self->raw );
+    my $sha1_hex = $sha1->hexdigest;
+    return $sha1_hex;
+}
+
+sub _build_size {
+    my $self = shift;
+    return length($self->content || "");
+}
+
+sub raw {
+    my $self = shift;
+    return $self->kind . ' ' . $self->size . "\0" . $self->content;
+}
 
 __PACKAGE__->meta->make_immutable;
 

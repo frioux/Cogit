@@ -6,8 +6,7 @@ use namespace::autoclean;
 
 extends 'Git::PurePerl::Object';
 
-has 'kind' =>
-    ( is => 'ro', isa => 'ObjectKind', required => 1, default => 'blob' );
+has '+kind' => ( default => 'blob' );
 
 __PACKAGE__->meta->make_immutable;
 

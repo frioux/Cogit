@@ -24,29 +24,29 @@ for my $directory (qw(test-init test-init-bare.git)) {
     is( $git->all_sha1s->all,   0, 'does not contain any sha1s' );
     is( $git->all_objects->all, 0, 'does not contain any objects' );
 
-    my $hello = Git::PurePerl::NewObject::Blob->new( content => 'hello' );
+    my $hello = Git::PurePerl::Object::Blob->new( content => 'hello' );
     $git->put_object($hello);
     is( $hello->sha1, 'b6fc4c620b67d95f953a5c1c1230aaab5db5a1b0' );
     is( $git->get_object('b6fc4c620b67d95f953a5c1c1230aaab5db5a1b0')->content,
         'hello' );
 
-    my $there = Git::PurePerl::NewObject::Blob->new( content => 'there' );
+    my $there = Git::PurePerl::Object::Blob->new( content => 'there' );
     $git->put_object($there);
     is( $there->sha1, 'c78ee1a5bdf46d22da300b68d50bc45c587c3293' );
     is( $git->get_object('c78ee1a5bdf46d22da300b68d50bc45c587c3293')->content,
         'there' );
 
-    my $hello_de = Git::PurePerl::NewDirectoryEntry->new(
+    my $hello_de = Git::PurePerl::DirectoryEntry->new(
         mode     => '100644',
         filename => 'hello.txt',
         sha1     => $hello->sha1,
     );
-    my $there_de = Git::PurePerl::NewDirectoryEntry->new(
+    my $there_de = Git::PurePerl::DirectoryEntry->new(
         mode     => '100644',
         filename => 'there.txt',
         sha1     => $there->sha1,
     );
-    my $tree = Git::PurePerl::NewObject::Tree->new(
+    my $tree = Git::PurePerl::Object::Tree->new(
         directory_entries => [ $hello_de, $there_de ] );
     is( $tree->sha1, '6d991aebc86bd09e86d74bb84bb9ebfb97e18026' );
     $git->put_object($tree);
@@ -68,7 +68,8 @@ for my $directory (qw(test-init test-init-bare.git)) {
         name  => 'Your Name Comes Here',
         email => 'you@yourdomain.example.com'
     );
-    my $commit = Git::PurePerl::NewObject::Commit->new(
+    my $commit = Git::PurePerl::Object::Commit->new(
+        git            => $git,
         tree           => $tree->sha1,
         author         => $actor,
         authored_time  => DateTime->from_epoch( epoch => 1240341681 ),
@@ -76,6 +77,14 @@ for my $directory (qw(test-init test-init-bare.git)) {
         committed_time => DateTime->from_epoch( epoch => 1240341682 ),
         comment        => 'Fix',
     );
+
+    is( $commit->content, <<'CONTENT' );
+tree 6d991aebc86bd09e86d74bb84bb9ebfb97e18026
+author Your Name Comes Here <you@yourdomain.example.com> 1240341681 +0000
+committer Your Name Comes Here <you@yourdomain.example.com> 1240341682 +0000
+
+Fix
+CONTENT
     is( $commit->sha1, '860caea5ba298bb4f1df9a80fad84951fcc7db72' );
     $git->put_object($commit);
 
@@ -129,18 +138,19 @@ for my $directory (qw(test-init test-init-bare.git)) {
     is( $git->ref('refs/heads/master')->sha1,
         $commit->sha1, 'master points to our commit' );
 
-    my $here = Git::PurePerl::NewObject::Blob->new( content => 'here' );
+    my $here = Git::PurePerl::Object::Blob->new( git => $git, content => 'here' );
     $git->put_object($here);
 
-    my $here_de = Git::PurePerl::NewDirectoryEntry->new(
+    my $here_de = Git::PurePerl::DirectoryEntry->new(
         mode     => '100644',
         filename => 'there.txt',
         sha1     => $here->sha1,
     );
-    $tree = Git::PurePerl::NewObject::Tree->new(
+    $tree = Git::PurePerl::Object::Tree->new(
         directory_entries => [ $hello_de, $here_de ] );
     $git->put_object($tree);
-    my $newcommit = Git::PurePerl::NewObject::Commit->new(
+    my $newcommit = Git::PurePerl::Object::Commit->new(
+        git => $git,
         tree           => $tree->sha1,
         parent         => $commit->sha1,
         author         => $actor,

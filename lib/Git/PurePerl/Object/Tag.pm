@@ -6,8 +6,7 @@ use namespace::autoclean;
 
 extends 'Git::PurePerl::Object';
 
-has 'kind' =>
-    ( is => 'ro', isa => 'ObjectKind', required => 1, default => 'tag' );
+has '+kind' => ( default => 'tag' );
 has 'object'  => ( is => 'rw', isa => 'Str', required => 0 );
 has 'tag'     => ( is => 'rw', isa => 'Str', required => 0 );
 has 'tagger'  => ( is => 'rw', isa => 'Git::PurePerl::Actor', required => 0 );
