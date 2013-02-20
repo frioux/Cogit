@@ -7,7 +7,11 @@ use namespace::autoclean;
 
 extends 'Git::PurePerl::Protocol';
 
-has 'path' => ( is => 'ro', isa => 'Str', required => 1 );
+has path => (
+    is => 'ro',
+    isa => 'Str',
+    required => 1,
+);
 
 sub connect_socket {
     my $self = shift;

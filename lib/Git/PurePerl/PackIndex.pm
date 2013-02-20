@@ -4,13 +4,28 @@ use MooseX::StrictConstructor;
 use IO::File;
 use namespace::autoclean;
 
-has 'filename' =>
-    ( is => 'ro', isa => 'Path::Class::File', required => 1, coerce => 1 );
+has filename => (
+    is => 'ro',
+    isa => 'Path::Class::File',
+    required => 1,
+    coerce => 1,
+);
 
-has 'fh' => ( is => 'rw', isa => 'IO::File' );
+has fh => (
+    is => 'rw',
+    isa => 'IO::File',
+);
 
-has 'offsets' => ( is => 'rw', isa => 'ArrayRef[Int]', auto_deref => 1, );
-has 'size' => ( is => 'rw', isa => 'Int' );
+has offsets => (
+    is => 'rw',
+    isa => 'ArrayRef[Int]',
+    auto_deref => 1,
+);
+
+has size => (
+    is => 'rw',
+    isa => 'Int',
+);
 
 my $FanOutCount   = 256;
 my $SHA1Size      = 20;

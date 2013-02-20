@@ -5,8 +5,16 @@ use namespace::autoclean;
 
 extends 'Git::PurePerl::Pack';
 
-has 'index_filename' => ( is => 'rw', isa => 'Path::Class::File', coerce => 1 );
-has 'index' => ( is => 'rw', isa => 'Git::PurePerl::PackIndex' );
+has index_filename => (
+    is => 'rw',
+    isa => 'Path::Class::File',
+    coerce => 1,
+);
+
+has index => (
+    is => 'rw',
+    isa => 'Git::PurePerl::PackIndex',
+);
 
 sub BUILD {
     my $self = shift;

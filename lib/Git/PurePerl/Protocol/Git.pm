@@ -6,9 +6,23 @@ use namespace::autoclean;
 
 extends 'Git::PurePerl::Protocol';
 
-has 'hostname' => ( is => 'ro', isa => 'Str', required => 1 );
-has 'port'    => ( is => 'ro', isa => 'Int', default => 9418 );
-has 'project' => ( is => 'rw', isa => 'Str', required => 1 );
+has hostname => (
+    is => 'ro',
+    isa => 'Str',
+    required => 1,
+);
+
+has port => (
+    is => 'ro',
+    isa => 'Int',
+    default => 9418,
+);
+
+has project => (
+    is => 'rw',
+    isa => 'Str',
+    required => 1,
+);
 
 sub connect_socket {
     my $self = shift;

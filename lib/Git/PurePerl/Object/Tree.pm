@@ -6,9 +6,14 @@ use namespace::autoclean;
 
 extends 'Git::PurePerl::Object';
 
-has 'kind' =>
-    ( is => 'ro', isa => 'ObjectKind', required => 1, default => 'tree' );
-has 'directory_entries' => (
+has kind => (
+    is => 'ro',
+    isa => 'ObjectKind',
+    required => 1,
+    default => 'tree',
+);
+
+has directory_entries => (
     is         => 'rw',
     isa        => 'ArrayRef[Git::PurePerl::DirectoryEntry]',
     auto_deref => 1,

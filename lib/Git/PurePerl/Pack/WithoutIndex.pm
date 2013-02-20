@@ -5,10 +5,12 @@ use namespace::autoclean;
 
 extends 'Git::PurePerl::Pack';
 
-has 'offsets' => ( is => 'rw', isa => 'HashRef' );
+has offsets => (
+    is => 'rw',
+    isa => 'HashRef',
+);
 
-my @TYPES = ( 'none', 'commit', 'tree', 'blob', 'tag', '', 'ofs_delta',
-    'ref_delta' );
+my @TYPES = (qw(none commit tree blob tag), '', 'ofs_delta', 'ref_delta' );
 
 sub create_index {
     my ($self) = @_;

@@ -34,33 +34,33 @@ use namespace::autoclean;
 our $VERSION = '0.48';
 $VERSION = eval $VERSION;
 
-has 'directory' => (
+has directory => (
     is       => 'ro',
     isa      => 'Path::Class::Dir',
     coerce   => 1
 );
 
-has 'gitdir' => (
+has gitdir => (
     is       => 'ro',
     isa      => 'Path::Class::Dir',
     required => 1,
     coerce   => 1
 );
 
-has 'loose' => (
+has loose => (
     is         => 'rw',
     isa        => 'Git::PurePerl::Loose',
     lazy_build => 1,
 );
 
-has 'packs' => (
+has packs => (
     is         => 'rw',
     isa        => 'ArrayRef[Git::PurePerl::Pack]',
     auto_deref => 1,
     lazy_build => 1,
 );
 
-has 'description' => (
+has description => (
     is      => 'rw',
     isa     => 'Str',
     lazy    => 1,
@@ -70,7 +70,7 @@ has 'description' => (
     }
 );
 
-has 'config' => (
+has config => (
     is      => 'ro',
     isa     => 'Git::PurePerl::Config',
     lazy    => 1,

@@ -6,7 +6,7 @@ use Compress::Zlib qw(compress uncompress);
 use Path::Class;
 use namespace::autoclean;
 
-has 'directory' => (
+has directory => (
     is       => 'ro',
     isa      => 'Path::Class::Dir',
     required => 1,

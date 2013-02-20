@@ -4,17 +4,38 @@ use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 
-enum 'ObjectKind' => qw(commit tree blob tag);
+enum ObjectKind => qw(commit tree blob tag);
 
-has 'kind'    => ( is => 'ro', isa => 'ObjectKind',    required => 1 );
+has kind => (
+    is => 'ro',
+    isa => 'ObjectKind',
+    required => 1,
+);
 
 # TODO: make this required later
-has 'content' => ( is => 'rw', lazy_build => 1, predicate => 'has_content'  );
+has content => (
+    is => 'rw',
+    lazy_build => 1,
+    predicate => 'has_content',
+);
 
-has 'size'    => ( is => 'ro', isa => 'Int', lazy_build =>1 );
-has 'sha1'    => ( is => 'ro', isa => 'Str', lazy_build =>1 );
+has size => (
+    is => 'ro',
+    isa => 'Int',
+    lazy_build => 1,
+);
 
-has 'git'     => ( is => 'rw', isa => 'Git::PurePerl', weak_ref => 1 );
+has sha1 => (
+    is => 'ro',
+    isa => 'Str',
+    lazy_build => 1,
+);
+
+has git => (
+    is => 'rw',
+    isa => 'Git::PurePerl',
+    weak_ref => 1,
+);
 
 sub _build_sha1 {
     my $self = shift;

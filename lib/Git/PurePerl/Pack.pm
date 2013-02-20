@@ -6,12 +6,20 @@ use Compress::Raw::Zlib;
 use IO::File;
 use namespace::autoclean;
 
-has 'filename' =>
-    ( is => 'ro', isa => 'Path::Class::File', required => 1, coerce => 1 );
-has 'fh' => ( is => 'rw', isa => 'IO::File', lazy_build => 1 );
+has filename => (
+    is => 'ro',
+    isa => 'Path::Class::File',
+    required => 1,
+    coerce => 1,
+);
 
-my @TYPES = ( 'none', 'commit', 'tree', 'blob', 'tag', '', 'ofs_delta',
-    'ref_delta' );
+has fh => (
+    is => 'rw',
+    isa => 'IO::File',
+    lazy_build => 1,
+);
+
+my @TYPES = (qw(none commit tree blob tag), '', 'ofs_delta', 'ref_delta' );
 my $OBJ_NONE      = 0;
 my $OBJ_COMMIT    = 1;
 my $OBJ_TREE      = 2;
