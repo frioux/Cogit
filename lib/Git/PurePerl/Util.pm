@@ -15,12 +15,12 @@ use Path::Class qw( dir );
 
 =head1 SYNOPSIS
 
-	use Git::PurePerl::Util;
-	use Git::PurePerl;
+    use Git::PurePerl::Util;
+    use Git::PurePerl;
 
-	my $repo = Git::PurePerl->new(
-		gitdir => current_git_dir(),
-	);
+    my $repo = Git::PurePerl->new(
+        gitdir => current_git_dir(),
+    );
 
 =cut
 
@@ -32,9 +32,9 @@ Determines if the given C<$dir> has the basic requirements of a Git repository d
 
 ( ie: either a checkouts C<.git> folder, or a bare repository )
 
-	if ( is_git_dir( $dir ) ) {
-		...
-	}
+    if ( is_git_dir( $dir ) ) {
+        ...
+    }
 
 =cut
 
@@ -48,7 +48,7 @@ sub is_git_dir {
 
 =head2 find_git_dir
 
-	my $dir = find_git_dir( $subdir );
+    my $dir = find_git_dir( $subdir );
 
 Finds the closest C<.git> or bare tree that is either at C<$subdir> or somewhere above C<$subdir>
 
@@ -79,7 +79,7 @@ sub find_git_dir {
 
 Finds the closest C<.git> or bare tree by walking up parents.
 
-	my $git_dir = current_git_dir();
+    my $git_dir = current_git_dir();
 
 If C<$CWD> is inside a bare repo somewhere, it will return the path to the bare repo root directory.
 
