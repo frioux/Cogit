@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Test::More;
 use Git::PurePerl;
+use Git::PurePerl::DirectoryEntry;
 use Path::Class;
 
 for my $directory (qw(test-init test-init-bare.git)) {

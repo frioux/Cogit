@@ -1,6 +1,7 @@
 package Git::PurePerl::Pack::WithoutIndex;
 use Moose;
 use MooseX::StrictConstructor;
+use IO::Digest;
 use namespace::autoclean;
 
 extends 'Git::PurePerl::Pack';

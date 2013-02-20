@@ -3,6 +3,8 @@ use Moose;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use Encode qw/decode/;
+use Git::PurePerl::Actor;
+use DateTime;
 use namespace::autoclean;
 
 extends 'Git::PurePerl::Object';
