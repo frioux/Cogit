@@ -37,7 +37,6 @@ $VERSION = eval $VERSION;
 has 'directory' => (
     is       => 'ro',
     isa      => 'Path::Class::Dir',
-    required => 0,
     coerce   => 1
 );
 
@@ -51,14 +50,12 @@ has 'gitdir' => (
 has 'loose' => (
     is         => 'rw',
     isa        => 'Git::PurePerl::Loose',
-    required   => 0,
     lazy_build => 1,
 );
 
 has 'packs' => (
     is         => 'rw',
     isa        => 'ArrayRef[Git::PurePerl::Pack]',
-    required   => 0,
     auto_deref => 1,
     lazy_build => 1,
 );

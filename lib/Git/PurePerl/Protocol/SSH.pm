@@ -8,7 +8,7 @@ use namespace::autoclean;
 extends 'Git::PurePerl::Protocol';
 
 has 'hostname' => ( is => 'ro', isa => 'Str', required => 1 );
-has 'username' => ( is => 'ro', isa => 'Str', required => 0 );
+has 'username' => ( is => 'ro', isa => 'Str' );
 has 'path' => ( is => 'ro', isa => 'Str', required => 1 );
 
 sub connect_socket {

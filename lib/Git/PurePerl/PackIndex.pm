@@ -7,11 +7,10 @@ use namespace::autoclean;
 has 'filename' =>
     ( is => 'ro', isa => 'Path::Class::File', required => 1, coerce => 1 );
 
-has 'fh' => ( is => 'rw', isa => 'IO::File', required => 0 );
+has 'fh' => ( is => 'rw', isa => 'IO::File' );
 
-has 'offsets' =>
-    ( is => 'rw', isa => 'ArrayRef[Int]', required => 0, auto_deref => 1, );
-has 'size' => ( is => 'rw', isa => 'Int', required => 0 );
+has 'offsets' => ( is => 'rw', isa => 'ArrayRef[Int]', auto_deref => 1, );
+has 'size' => ( is => 'rw', isa => 'Int' );
 
 my $FanOutCount   = 256;
 my $SHA1Size      = 20;

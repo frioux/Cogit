@@ -5,7 +5,7 @@ use namespace::autoclean;
 
 extends 'Git::PurePerl::Pack';
 
-has 'offsets' => ( is => 'rw', isa => 'HashRef', required => 0 );
+has 'offsets' => ( is => 'rw', isa => 'HashRef' );
 
 my @TYPES = ( 'none', 'commit', 'tree', 'blob', 'tag', '', 'ofs_delta',
     'ref_delta' );

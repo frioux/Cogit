@@ -9,8 +9,8 @@ use Git::PurePerl::Protocol::SSH;
 use Git::PurePerl::Protocol::File;
 
 has 'remote' => ( is => 'ro', isa => 'Str', required => 1 );
-has 'read_socket' => ( is => 'rw', required => 0 );
-has 'write_socket' => ( is => 'rw', required => 0 );
+has 'read_socket' => ( is => 'rw' );
+has 'write_socket' => ( is => 'rw' );
 
 sub connect {
     my $self = shift;

@@ -11,7 +11,6 @@ has 'kind' =>
 has 'directory_entries' => (
     is         => 'rw',
     isa        => 'ArrayRef[Git::PurePerl::DirectoryEntry]',
-    required   => 0,
     auto_deref => 1,
 );
 

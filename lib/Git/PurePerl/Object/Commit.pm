@@ -9,16 +9,16 @@ extends 'Git::PurePerl::Object';
 
 has '+git' => ( required => 1 );
 has '+kind' => ( default => 'commit' );
-has 'tree_sha1'   => ( is => 'rw', isa => 'Str', init_arg => 'tree',required => 0 );
-has '_parent' => ( init_arg => 'parent', is => 'rw', isa => 'Str',                  required => 0 );
-has 'parent_sha1s' => ( is => 'rw', isa => 'ArrayRef[Str]', required => 0, default => sub { [] });
-has 'author' => ( is => 'rw', isa => 'Git::PurePerl::Actor', required => 0 );
-has 'authored_time' => ( is => 'rw', isa => 'DateTime', required => 0 );
+has 'tree_sha1'   => ( is => 'rw', isa => 'Str', init_arg => 'tree' );
+has '_parent' => ( init_arg => 'parent', is => 'rw', isa => 'Str' );
+has 'parent_sha1s' => ( is => 'rw', isa => 'ArrayRef[Str]', default => sub { [] });
+has 'author' => ( is => 'rw', isa => 'Git::PurePerl::Actor' );
+has 'authored_time' => ( is => 'rw', isa => 'DateTime' );
 has 'committer' =>
-    ( is => 'rw', isa => 'Git::PurePerl::Actor', required => 0 );
-has 'committed_time' => ( is => 'rw', isa => 'DateTime', required => 0 );
-has 'comment'        => ( is => 'rw', isa => 'Str',      required => 0 );
-has 'encoding'       => ( is => 'rw', isa => 'Str',      required => 0 );
+    ( is => 'rw', isa => 'Git::PurePerl::Actor' );
+has 'committed_time' => ( is => 'rw', isa => 'DateTime' );
+has 'comment'        => ( is => 'rw', isa => 'Str' );
+has 'encoding'       => ( is => 'rw', isa => 'Str' );
 
 my %method_map = (
     'tree'      => 'tree_sha1',

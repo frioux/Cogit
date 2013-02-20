@@ -7,13 +7,12 @@ use namespace::autoclean;
 extends 'Git::PurePerl::Object';
 
 has '+kind' => ( default => 'tag' );
-has 'object'  => ( is => 'rw', isa => 'Str', required => 0 );
-has 'tag'     => ( is => 'rw', isa => 'Str', required => 0 );
-has 'tagger'  => ( is => 'rw', isa => 'Git::PurePerl::Actor', required => 0 );
-has 'tagged_time' => ( is => 'rw', isa => 'DateTime', required => 0 );
-has 'comment' => ( is => 'rw', isa => 'Str', required => 0 );
-has 'object_kind' =>
-    ( is => 'rw', isa => 'ObjectKind', required => 0);
+has 'object'  => ( is => 'rw', isa => 'Str' );
+has 'tag'     => ( is => 'rw', isa => 'Str' );
+has 'tagger'  => ( is => 'rw', isa => 'Git::PurePerl::Actor' );
+has 'tagged_time' => ( is => 'rw', isa => 'DateTime' );
+has 'comment' => ( is => 'rw', isa => 'Str' );
+has 'object_kind' => ( is => 'rw', isa => 'ObjectKind' );
 
 my %method_map = (type => 'object_kind');
 
