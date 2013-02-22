@@ -19,7 +19,6 @@ has fh => (
 has offsets => (
     is => 'rw',
     isa => 'ArrayRef[Int]',
-    auto_deref => 1,
 );
 
 has size => (

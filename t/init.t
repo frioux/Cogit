@@ -54,7 +54,7 @@ for my $directory (qw(test-init test-init-bare.git)) {
     my $tree2 = $git->get_object('6d991aebc86bd09e86d74bb84bb9ebfb97e18026');
     is( $tree2->kind, 'tree' );
     is( $tree2->size, 74 );
-    my @directory_entries = $tree2->directory_entries;
+    my @directory_entries = @{$tree2->directory_entries};
     is( @directory_entries, 2 );
     my $directory_entry = $directory_entries[0];
     is( $directory_entry->mode,     '100644' );

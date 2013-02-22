@@ -29,7 +29,7 @@ foreach my $directory (qw(test-project test-project-packs test-project-packs2))
     my $tree = $commit->tree;
     is( $tree->kind, 'tree' );
     is( $tree->size, 36 );
-    my @directory_entries = $tree->directory_entries;
+    my @directory_entries = @{$tree->directory_entries};
     is( @directory_entries, 1 );
     my $directory_entry = $directory_entries[0];
     is( $directory_entry->mode,     '100644' );
@@ -57,7 +57,7 @@ hello world, again
     $tree = $commit->tree;
     is( $tree->kind, 'tree' );
     is( $tree->size, 36 );
-    @directory_entries = $tree->directory_entries;
+    @directory_entries = @{$tree->directory_entries};
     is( @directory_entries, 1 );
     $directory_entry = $directory_entries[0];
     is( $directory_entry->mode,     '100644' );
@@ -85,7 +85,7 @@ hello world, again
     $tree = $commit->tree;
     is( $tree->kind, 'tree' );
     is( $tree->size, 36 );
-    @directory_entries = $tree->directory_entries;
+    @directory_entries = @{$tree->directory_entries};
     is( @directory_entries, 1 );
     $directory_entry = $directory_entries[0];
     is( $directory_entry->mode,     '100644' );

@@ -42,7 +42,6 @@ has loose => (
 has packs => (
     is         => 'rw',
     isa        => 'ArrayRef[Git::PurePerl::Pack]',
-    auto_deref => 1,
     lazy_build => 1,
 );
 
@@ -238,7 +237,7 @@ sub get_objects {
 sub get_object_packed {
     my ( $self, $sha1 ) = @_;
 
-    foreach my $pack ( $self->packs ) {
+    foreach my $pack ( @{$self->packs} ) {
         my ( $kind, $size, $content ) = $pack->get_object($sha1);
         if ( defined($kind) && defined($size) && defined($content) ) {
             return $self->create_object( $sha1, $kind, $size, $content );
@@ -301,7 +300,7 @@ sub all_sha1s {
     my @streams;
     push @streams, $self->loose->all_sha1s;
 
-    foreach my $pack ( $self->packs ) {
+    foreach my $pack ( @{$self->packs} ) {
         push @streams, $pack->all_sha1s;
     }
 
@@ -407,7 +406,7 @@ sub checkout {
     $directory ||= $self->directory;
     $tree ||= $self->master->tree;
     confess("Missing tree") unless $tree;
-    foreach my $directory_entry ( $tree->directory_entries ) {
+    foreach my $directory_entry ( @{$tree->directory_entries} ) {
         my $filename = file( $directory, $directory_entry->filename );
         my $sha1     = $directory_entry->sha1;
         my $mode     = $directory_entry->mode;

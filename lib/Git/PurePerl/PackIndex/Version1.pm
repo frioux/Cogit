@@ -39,7 +39,7 @@ sub all_sha1s {
 
 sub get_object_offset {
     my ( $self, $want_sha1 ) = @_;
-    my @offsets = $self->offsets;
+    my @offsets = @{$self->offsets};
     my $fh      = $self->fh;
 
     my $slot = unpack( 'C', pack( 'H*', $want_sha1 ) );

@@ -17,13 +17,12 @@ has kind => (
 has directory_entries => (
     is         => 'rw',
     isa        => 'ArrayRef[Git::PurePerl::DirectoryEntry]',
-    auto_deref => 1,
 );
 
 sub _build_content {
     my $self = shift;
     my $content;
-    foreach my $de ( $self->directory_entries ) {
+    foreach my $de ( @{$self->directory_entries} ) {
         $content
             .= $de->mode . ' '
             . $de->filename . "\0"
