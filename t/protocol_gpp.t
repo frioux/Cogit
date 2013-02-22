@@ -4,9 +4,9 @@ use warnings;
 use Git::PurePerl;
 use Path::Class;
 use Test::More;
+use File::Temp;
 
-my $directory = 'test-protocol';
-dir($directory)->rmtree;
+my $directory = File::Temp->newdir;
 
 my $git = Git::PurePerl->init( directory => $directory );
 isa_ok( $git, 'Git::PurePerl', 'can init' );

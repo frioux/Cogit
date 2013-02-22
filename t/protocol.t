@@ -15,11 +15,11 @@ exit 0;
 use Git::PurePerl;
 use IO::File;
 use Path::Class;
+use File::Temp;
 
 # git daemon --verbose --reuseaddr --export-all --base-path=/home/acme/git/git-pureperl
 
-my $directory = 'test-protocol';
-dir($directory)->rmtree;
+my $directory = File::Temp->newdir;
 
 my $git = Git::PurePerl->init( directory => $directory );
 isa_ok( $git, 'Git::PurePerl', 'can init' );

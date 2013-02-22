@@ -4,14 +4,17 @@ use warnings;
 use Test::More;
 use Git::PurePerl;
 use Git::PurePerl::DirectoryEntry;
+use File::Temp;
 use Path::Class;
 
-for my $directory (qw(test-init test-init-bare.git)) {
-
-    dir($directory)->rmtree;
+my @dirs = (
+    File::Temp->newdir,
+    File::Temp->newdir,
+);
+for my $directory (@dirs) {
 
     my $git;
-    if ( $directory eq 'test-init-bare.git' ) {
+    if ( $directory eq $dirs[1] ) {
         $git = Git::PurePerl->init( gitdir => $directory );
     } else {
         $git = Git::PurePerl->init( directory => $directory );
@@ -102,7 +105,7 @@ CONTENT
     is( $commit2->committed_time->epoch, 1240341682 );
     is( $commit2->comment,               'Fix' );
 
-    if ( $directory eq 'test-init-bare.git' ) {
+    if ( $directory eq $dirs[1] ) {
         $git = Git::PurePerl->new( gitdir => $directory );
     } else {
         $git = Git::PurePerl->new( directory => $directory );
