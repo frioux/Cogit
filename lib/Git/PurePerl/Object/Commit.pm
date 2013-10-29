@@ -1,62 +1,62 @@
 package Git::PurePerl::Object::Commit;
-use Moose;
-use Moose::Util::TypeConstraints;
+use Moo;
+use MooX::Types::MooseLike::Base qw( ArrayRef Str InstanceOf );
 use Encode qw/decode/;
 use Git::PurePerl::Actor;
 use DateTime;
-use namespace::autoclean;
+use namespace::clean;
 
 extends 'Git::PurePerl::Object';
 
 has '+git' => ( required => 1 );
-has '+kind' => ( default => 'commit' );
+has '+kind' => ( default => sub { 'commit' } );
 
 has tree_sha1 => (
     is => 'rw',
-    isa => 'Str',
+    isa => Str,
     init_arg => 'tree',
 );
 
 has _parent => (
     init_arg => 'parent',
     is => 'rw',
-    isa => 'Str',
+    isa => Str,
 );
 
 has parent_sha1s => (
     is => 'rw',
-    isa => 'ArrayRef[Str]',
+    isa => ArrayRef[Str],
     default => sub { [] },
 );
 
 has author => (
     is => 'rw',
-    isa => 'Git::PurePerl::Actor',
+    isa => InstanceOf['Git::PurePerl::Actor'],
 );
 
 has authored_time => (
     is => 'rw',
-    isa => 'DateTime',
+    isa => InstanceOf['DateTime'],
 );
 
 has committer => (
     is => 'rw',
-    isa => 'Git::PurePerl::Actor',
+    isa => InstanceOf['Git::PurePerl::Actor'],
 );
 
 has committed_time => (
     is => 'rw',
-    isa => 'DateTime',
+    isa => InstanceOf['DateTime'],
 );
 
 has comment => (
     is => 'rw',
-    isa => 'Str',
+    isa => Str,
 );
 
 has encoding => (
     is => 'rw',
-    isa => 'Str',
+    isa => Str,
 );
 
 my %method_map = (
@@ -160,5 +160,5 @@ sub parents {
     return map { $self->git->get_object( $_ ) } @{$self->parent_sha1s};
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

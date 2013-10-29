@@ -1,14 +1,14 @@
 package Git::PurePerl::Protocol::File;
-use Moose;
-use Moose::Util::TypeConstraints;
+use Moo;
+use MooX::Types::MooseLike::Base 'Str';
 use IPC::Open2;
-use namespace::autoclean;
+use namespace::clean;
 
 extends 'Git::PurePerl::Protocol';
 
 has path => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 

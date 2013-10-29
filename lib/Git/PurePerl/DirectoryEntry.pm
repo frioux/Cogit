@@ -1,29 +1,30 @@
 package Git::PurePerl::DirectoryEntry;
-use Moose;
-use Moose::Util::TypeConstraints;
-use namespace::autoclean;
+
+use Moo;
+use MooX::Types::MooseLike::Base 'Str', 'InstanceOf';
+use namespace::clean;
 
 has mode => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 
 has filename => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 
 has sha1 => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 
 has git => (
     is => 'rw',
-    isa => 'Git::PurePerl',
+    isa => InstanceOf['Git::PurePerl'],
     weak_ref => 1,
 );
 
@@ -32,5 +33,5 @@ sub object {
     return $self->git->get_object( $self->sha1 );
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

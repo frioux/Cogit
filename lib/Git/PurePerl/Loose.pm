@@ -1,15 +1,16 @@
 package Git::PurePerl::Loose;
-use Moose;
-use MooseX::Types::Path::Class;
+use Moo;
+use MooX::Types::MooseLike::Base 'InstanceOf';
 use Compress::Zlib qw(compress uncompress);
 use Path::Class;
-use namespace::autoclean;
+use Check::ISA;
+use namespace::clean;
 
 has directory => (
     is       => 'ro',
-    isa      => 'Path::Class::Dir',
+    isa      => InstanceOf['Path::Class::Dir'],
     required => 1,
-    coerce   => 1
+    coerce   => sub { dir($_[0]) if !obj($_[0], 'Path::Class::Dir'); $_[0]; },
 );
 
 sub get_object {
@@ -56,5 +57,5 @@ sub all_sha1s {
     );
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

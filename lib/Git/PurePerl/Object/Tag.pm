@@ -1,40 +1,42 @@
 package Git::PurePerl::Object::Tag;
-use Moose;
-use Moose::Util::TypeConstraints;
-use namespace::autoclean;
+use Moo;
+use MooX::Types::MooseLike::Base 'Str', 'InstanceOf';
+use namespace::clean;
 
 extends 'Git::PurePerl::Object';
 
-has '+kind' => ( default => 'tag' );
+has '+kind' => ( default => sub { 'tag' } );
 
 has object => (
     is => 'rw',
-    isa => 'Str',
+    isa => Str,
 );
 
 has tag => (
     is => 'rw',
-    isa => 'Str',
+    isa => Str,
 );
 
 has tagger => (
     is => 'rw',
-    isa => 'Git::PurePerl::Actor',
+    isa => InstanceOf['Git::PurePerl::Actor'],
 );
 
 has tagged_time => (
     is => 'rw',
-    isa => 'DateTime',
+    isa => InstanceOf['DateTime'],
 );
 
 has comment => (
     is => 'rw',
-    isa => 'Str',
+    isa => Str,
 );
 
 has object_kind => (
     is => 'rw',
-    isa => 'ObjectKind',
+    isa => sub {
+        die "$_[0] is not a valid object type" unless $_[0] =~ m/commit|tree|blob|tag/
+    },
 );
 
 my %method_map = (type => 'object_kind');
@@ -63,5 +65,5 @@ sub BUILD {
     $self->comment( join "\n", @lines );
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

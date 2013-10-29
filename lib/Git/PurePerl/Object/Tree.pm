@@ -1,21 +1,16 @@
 package Git::PurePerl::Object::Tree;
-use Moose;
-use Moose::Util::TypeConstraints;
+use Moo;
 use Git::PurePerl::DirectoryEntry;
-use namespace::autoclean;
+use MooX::Types::MooseLike::Base 'ArrayRef', 'InstanceOf';
+use namespace::clean;
 
 extends 'Git::PurePerl::Object';
 
-has kind => (
-    is => 'ro',
-    isa => 'ObjectKind',
-    required => 1,
-    default => 'tree',
-);
+has '+kind' => ( default => sub { 'tree' } );
 
 has directory_entries => (
     is         => 'rw',
-    isa        => 'ArrayRef[Git::PurePerl::DirectoryEntry]',
+    isa        => ArrayRef[InstanceOf['Git::PurePerl::DirectoryEntry']],
 );
 
 sub _build_content {
@@ -27,7 +22,8 @@ sub _build_content {
             . $de->filename . "\0"
             . pack( 'H*', $de->sha1 );
     }
-    $self->content($content);
+
+    return $content;
 }
 
 sub BUILD {
@@ -59,5 +55,5 @@ sub BUILD {
     $self->directory_entries( \@directory_entries );
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

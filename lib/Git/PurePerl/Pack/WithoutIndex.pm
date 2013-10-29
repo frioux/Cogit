@@ -1,13 +1,15 @@
 package Git::PurePerl::Pack::WithoutIndex;
-use Moose;
+use Moo;
 use IO::Digest;
-use namespace::autoclean;
+use MooX::Types::MooseLike::Base 'HashRef';
+use Carp 'confess';
+use namespace::clean;
 
 extends 'Git::PurePerl::Pack';
 
 has offsets => (
     is => 'rw',
-    isa => 'HashRef',
+    isa => HashRef,
 );
 
 my @TYPES = (qw(none commit tree blob tag), '', 'ofs_delta', 'ref_delta' );
@@ -118,5 +120,5 @@ sub get_object {
     return $self->unpack_object($offset);
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

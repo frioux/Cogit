@@ -1,21 +1,25 @@
 package Git::PurePerl::Pack;
-use Moose;
-use MooseX::Types::Path::Class;
+use Moo;
+use MooX::Types::MooseLike::Base 'InstanceOf';
+use Path::Class;
 use Compress::Raw::Zlib;
 use IO::File;
-use namespace::autoclean;
+use Carp 'confess';
+use Check::ISA;
+use namespace::clean;
 
 has filename => (
     is => 'ro',
-    isa => 'Path::Class::File',
+    isa => InstanceOf['Path::Class::File'],
     required => 1,
-    coerce => 1,
+    coerce   => sub { file($_[0]) if !obj($_[0], 'Path::Class::File'); $_[0]; },
 );
 
 has fh => (
     is => 'rw',
-    isa => 'IO::File',
-    lazy_build => 1,
+    isa => InstanceOf['IO::File'],
+    lazy => 1,
+    builder => '_build_fh',
 );
 
 my @TYPES = (qw(none commit tree blob tag), '', 'ofs_delta', 'ref_delta' );
@@ -212,5 +216,5 @@ sub patch_delta_header_size {
     return ( $size, $pos );
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

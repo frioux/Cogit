@@ -1,28 +1,31 @@
 package Git::PurePerl::PackIndex;
-use Moose;
+use Moo;
+use Path::Class 'file';
+use Check::ISA;
 use IO::File;
-use namespace::autoclean;
+use MooX::Types::MooseLike::Base qw( InstanceOf ArrayRef Str Int );
+use namespace::clean;
 
 has filename => (
     is => 'ro',
-    isa => 'Path::Class::File',
+    isa      => InstanceOf['Path::Class::File'],
+    coerce   => sub { file($_[0]) },
     required => 1,
-    coerce => 1,
 );
 
 has fh => (
     is => 'rw',
-    isa => 'IO::File',
+    isa => InstanceOf['IO::File'],
 );
 
 has offsets => (
     is => 'rw',
-    isa => 'ArrayRef[Int]',
+    isa => ArrayRef[Int],
 );
 
 has size => (
     is => 'rw',
-    isa => 'Int',
+    isa => Int,
 );
 
 my $FanOutCount   = 256;
@@ -54,5 +57,5 @@ sub BUILD {
     $self->size( $offsets[-1] );
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

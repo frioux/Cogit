@@ -1,6 +1,8 @@
 package Git::PurePerl;
-use Moose;
-use MooseX::Types::Path::Class;
+use Moo;
+use Carp 'confess';
+use Check::ISA;
+use MooX::Types::MooseLike::Base qw( InstanceOf ArrayRef Str );
 use Data::Stream::Bulk::Array;
 use Data::Stream::Bulk::Path::Class;
 use File::Find::Rule;
@@ -14,39 +16,41 @@ use Git::PurePerl::Pack::WithIndex;
 use Git::PurePerl::Pack::WithoutIndex;
 use Git::PurePerl::Protocol;
 use Path::Class;
-use namespace::autoclean;
+use namespace::clean;
 
 our $VERSION = '0.48';
 $VERSION = eval $VERSION;
 
 has directory => (
     is       => 'ro',
-    isa      => 'Path::Class::Dir',
-    coerce   => 1
+    isa      => InstanceOf['Path::Class::Dir'],
+    coerce   => sub { return dir($_[0]); },
 );
 
 has gitdir => (
     is       => 'ro',
-    isa      => 'Path::Class::Dir',
+    isa      => InstanceOf['Path::Class::Dir'],
+    coerce   => sub { return dir($_[0]); },
     required => 1,
-    coerce   => 1
 );
 
 has loose => (
     is         => 'rw',
-    isa        => 'Git::PurePerl::Loose',
-    lazy_build => 1,
+    isa        => InstanceOf['Git::PurePerl::Loose'],
+    lazy       => 1,
+    builder    => '_build_loose',
 );
 
 has packs => (
     is         => 'rw',
-    isa        => 'ArrayRef[Git::PurePerl::Pack]',
-    lazy_build => 1,
+    isa        => ArrayRef[InstanceOf['Git::PurePerl::Pack']],
+    lazy       => 1,
+    builder    => '_build_packs',
 );
 
 has description => (
     is      => 'rw',
-    isa     => 'Str',
+    isa     => Str,
     lazy    => 1,
     default => sub {
         my $self = shift;
@@ -56,15 +60,13 @@ has description => (
 
 has config => (
     is      => 'ro',
-    isa     => 'Git::PurePerl::Config',
+    isa     => InstanceOf['Git::PurePerl::Config'],
     lazy    => 1,
     default => sub {
         my $self = shift;
         Git::PurePerl::Config->new(git => $self);
     }
 );
-
-__PACKAGE__->meta->make_immutable;
 
 sub BUILDARGS {
     my $class  = shift;
@@ -436,11 +438,11 @@ sub clone {
         $remote = shift;
     }
 
-    my $protocol = Git::PurePerl::Protocol->new(
-        remote => $remote,
-    );
+    my $protocol = Git::PurePerl::Protocol
+        ->new( remote => $remote )
+        ->connect;
 
-    my $sha1s = $protocol->connect;
+    my $sha1s = $protocol->fetch;
     my $head  = $sha1s->{HEAD};
     my $data  = $protocol->fetch_pack($head);
 

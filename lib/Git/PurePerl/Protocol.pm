@@ -1,7 +1,7 @@
 package Git::PurePerl::Protocol;
-use Moose;
-use Moose::Util::TypeConstraints;
-use namespace::autoclean;
+use Moo;
+use MooX::Types::MooseLike::Base qw( Str );
+use namespace::clean;
 
 use Git::PurePerl::Protocol::Git;
 use Git::PurePerl::Protocol::SSH;
@@ -9,7 +9,7 @@ use Git::PurePerl::Protocol::File;
 
 has remote => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 
@@ -19,28 +19,37 @@ has write_socket => ( is => 'rw' );
 sub connect {
     my $self = shift;
 
+    my @args = ( remote => $self->remote );
+
+    my $ret;
     if ($self->remote =~ m{^git://(.*?@)?(.*?)(/.*)}) {
-        Git::PurePerl::Protocol::Git->meta->rebless_instance(
-            $self,
+        $ret = Git::PurePerl::Protocol::Git->new(
+            @args,
             hostname => $2,
             project => $3,
         );
     } elsif ($self->remote =~ m{^file://(/.*)}) {
-        Git::PurePerl::Protocol::File->meta->rebless_instance(
-            $self,
+        $ret = Git::PurePerl::Protocol::File->new(
+            @args,
             path => $1,
         );
     } elsif ($self->remote =~ m{^ssh://(?:(.*?)@)?(.*?)(/.*)}
                  or $self->remote =~ m{^(?:(.*?)@)?(.*?):(.*)}) {
-        Git::PurePerl::Protocol::SSH->meta->rebless_instance(
-            $self,
+        $ret = Git::PurePerl::Protocol::SSH->new(
+            @args,
             $1 ? (username => $1) : (),
             hostname => $2,
             path => $3,
         );
     }
 
-    $self->connect_socket;
+    $ret->connect_socket;
+
+    return $ret
+}
+
+sub fetch {
+    my $self = shift;
 
     my %sha1s;
     while ( my $line = $self->read_line() ) {
@@ -144,4 +153,4 @@ sub read_line {
     return $self->read( $len - 4 );
 }
 
-__PACKAGE__->meta->make_immutable;
+1;

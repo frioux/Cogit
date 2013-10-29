@@ -1,12 +1,9 @@
 package Git::PurePerl::Object::Blob;
-use Moose;
-use Moose::Util::TypeConstraints;
-use namespace::autoclean;
+use Moo;
+use namespace::clean;
 
 extends 'Git::PurePerl::Object';
 
-has '+kind' => ( default => 'blob' );
-
-__PACKAGE__->meta->make_immutable;
+has '+kind' => ( default => sub { 'blob' } );
 
 1;

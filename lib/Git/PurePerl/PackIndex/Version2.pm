@@ -1,6 +1,6 @@
 package Git::PurePerl::PackIndex::Version2;
-use Moose;
-use namespace::autoclean;
+use Moo;
+use namespace::clean;
 
 extends 'Git::PurePerl::PackIndex';
 
@@ -88,5 +88,5 @@ sub get_object_offset {
     return;
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

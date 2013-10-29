@@ -1,39 +1,42 @@
 package Git::PurePerl::Object;
-use Moose;
-use Moose::Util::TypeConstraints;
+use Moo;
 use Digest::SHA;
-use namespace::autoclean;
-
-enum ObjectKind => qw(commit tree blob tag);
+use MooX::Types::MooseLike::Base qw( Str Int InstanceOf );
+use namespace::clean;
 
 has kind => (
     is => 'ro',
-    isa => 'ObjectKind',
+    isa => sub {
+        die "$_[0] is not a valid object type" unless $_[0] =~ m/commit|tree|blob|tag/
+    },
     required => 1,
 );
 
 # TODO: make this required later
 has content => (
     is => 'rw',
-    lazy_build => 1,
+    builder => '_build_content',
+    lazy => 1,
     predicate => 'has_content',
 );
 
 has size => (
     is => 'ro',
-    isa => 'Int',
-    lazy_build => 1,
+    isa => Int,
+    builder => '_build_size',
+    lazy => 1,
 );
 
 has sha1 => (
     is => 'ro',
-    isa => 'Str',
-    lazy_build => 1,
+    isa => Str,
+    builder => '_build_sha1',
+    lazy => 1,
 );
 
 has git => (
     is => 'rw',
-    isa => 'Git::PurePerl',
+    isa => InstanceOf['Git::PurePerl'],
     weak_ref => 1,
 );
 
@@ -54,7 +57,5 @@ sub raw {
     my $self = shift;
     return $self->kind . ' ' . $self->size . "\0" . $self->content;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

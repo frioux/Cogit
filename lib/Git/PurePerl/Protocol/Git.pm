@@ -1,26 +1,26 @@
 package Git::PurePerl::Protocol::Git;
-use Moose;
-use Moose::Util::TypeConstraints;
+use Moo;
+use MooX::Types::MooseLike::Base qw( Int Str );
 use IO::Socket::INET;
-use namespace::autoclean;
+use namespace::clean;
 
 extends 'Git::PurePerl::Protocol';
 
 has hostname => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 
 has port => (
     is => 'ro',
-    isa => 'Int',
-    default => 9418,
+    isa => Int,
+    default => sub { 9418 },
 );
 
 has project => (
     is => 'rw',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 

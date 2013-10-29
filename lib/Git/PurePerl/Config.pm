@@ -1,7 +1,7 @@
 package Git::PurePerl::Config;
-use Moose;
-use Moose::Util::TypeConstraints;
-use namespace::autoclean;
+use Moo;
+use MooX::Types::MooseLike::Base qw( InstanceOf );
+use namespace::clean;
 
 extends 'Config::GitLike';
 
@@ -9,12 +9,12 @@ has '+confname' => ( default => "gitconfig" );
 
 has git => (
     is => 'ro',
-    isa => 'Git::PurePerl',
+    isa => InstanceOf['Git::PurePerl'],
     required => 1,
     weak_ref => 1,
 );
 
-override dir_file => sub {
+sub dir_file {
     my $self = shift;
     return $self->git->gitdir->file("config");
 };

@@ -1,20 +1,23 @@
 package Git::PurePerl::Pack::WithIndex;
-use Moose;
+use Moo;
 use Git::PurePerl::PackIndex::Version1;
 use Git::PurePerl::PackIndex::Version2;
-use namespace::autoclean;
+use MooX::Types::MooseLike::Base 'InstanceOf';
+use Path::Class;
+use Check::ISA;
+use namespace::clean;
 
 extends 'Git::PurePerl::Pack';
 
 has index_filename => (
     is => 'rw',
-    isa => 'Path::Class::File',
-    coerce => 1,
+    coerce => sub { file($_[0]) if !obj($_[0], 'Path::Class::File'); $_[0]; },
+    #isa => InstanceOf['Path::Class::File'],
 );
 
 has index => (
     is => 'rw',
-    isa => 'Git::PurePerl::PackIndex',
+    isa => InstanceOf['Git::PurePerl::PackIndex'],
 );
 
 sub BUILD {
@@ -56,5 +59,5 @@ sub get_object {
     return $self->unpack_object($offset);
 }
 
-__PACKAGE__->meta->make_immutable;
+1;
 

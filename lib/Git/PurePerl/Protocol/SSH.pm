@@ -1,25 +1,25 @@
 package Git::PurePerl::Protocol::SSH;
-use Moose;
-use Moose::Util::TypeConstraints;
+use Moo;
+use MooX::Types::MooseLike::Base 'Str';
 use IPC::Open2;
-use namespace::autoclean;
+use namespace::clean;
 
 extends 'Git::PurePerl::Protocol';
 
 has hostname => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 
 has username => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
 );
 
 has path => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 

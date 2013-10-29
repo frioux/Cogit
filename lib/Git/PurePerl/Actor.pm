@@ -1,20 +1,19 @@
 package Git::PurePerl::Actor;
-use Moose;
-use Moose::Util::TypeConstraints;
-use namespace::autoclean;
+
+use Moo;
+use MooX::Types::MooseLike::Base 'Str';
+use namespace::clean;
 
 has name => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
 
 has email => (
     is => 'ro',
-    isa => 'Str',
+    isa => Str,
     required => 1,
 );
-
-__PACKAGE__->meta->make_immutable;
 
 1;

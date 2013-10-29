@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 use Git::PurePerl;
-use IO::File;
 use Path::Class;
 use Test::More;
 
