@@ -1,6 +1,5 @@
 package Git::PurePerl::Pack::WithIndex;
 use Moose;
-use MooseX::StrictConstructor;
 use Git::PurePerl::PackIndex::Version1;
 use Git::PurePerl::PackIndex::Version2;
 use namespace::autoclean;

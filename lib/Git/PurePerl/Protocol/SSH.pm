@@ -1,6 +1,5 @@
 package Git::PurePerl::Protocol::SSH;
 use Moose;
-use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use IPC::Open2;
 use namespace::autoclean;

@@ -1,6 +1,5 @@
 package Git::PurePerl::Protocol::Git;
 use Moose;
-use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use IO::Socket::INET;
 use namespace::autoclean;

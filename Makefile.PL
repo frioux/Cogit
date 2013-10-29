@@ -20,7 +20,6 @@ requires        'DateTime'                   => '0';
 requires        'File::Find::Rule'           => '0';
 requires        'IO::Digest'                 => '0';
 requires        'Moose'                      => '0';
-requires        'MooseX::StrictConstructor'  => '0';
 requires        'MooseX::Types::Path::Class' => '0';
 requires 'namespace::autoclean';
 

@@ -1,6 +1,5 @@
 package Git::PurePerl::Object;
 use Moose;
-use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use Digest::SHA;
 use namespace::autoclean;

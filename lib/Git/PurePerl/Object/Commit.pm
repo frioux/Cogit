@@ -1,6 +1,5 @@
 package Git::PurePerl::Object::Commit;
 use Moose;
-use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use Encode qw/decode/;
 use Git::PurePerl::Actor;

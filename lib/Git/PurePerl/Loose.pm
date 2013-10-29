@@ -1,6 +1,5 @@
 package Git::PurePerl::Loose;
 use Moose;
-use MooseX::StrictConstructor;
 use MooseX::Types::Path::Class;
 use Compress::Zlib qw(compress uncompress);
 use Path::Class;

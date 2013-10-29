@@ -1,6 +1,5 @@
 package Git::PurePerl::Actor;
 use Moose;
-use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 

@@ -1,6 +1,5 @@
 package Git::PurePerl::Object::Tree;
 use Moose;
-use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;
 use Git::PurePerl::DirectoryEntry;
 use namespace::autoclean;

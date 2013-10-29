@@ -1,6 +1,5 @@
 package Git::PurePerl;
 use Moose;
-use MooseX::StrictConstructor;
 use MooseX::Types::Path::Class;
 use Data::Stream::Bulk::Array;
 use Data::Stream::Bulk::Path::Class;
