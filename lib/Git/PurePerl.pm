@@ -18,9 +18,6 @@ use Git::PurePerl::Protocol;
 use Path::Class;
 use namespace::clean;
 
-our $VERSION = '0.48';
-$VERSION = eval $VERSION;
-
 has directory => (
     is       => 'ro',
     isa      => InstanceOf['Path::Class::Dir'],
