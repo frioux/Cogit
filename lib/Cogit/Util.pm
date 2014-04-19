@@ -3,7 +3,7 @@ use warnings;
 
 package Cogit::Util;
 
-use Sub::Exporter -setup => {
+use Sub::Exporter::Progressive -setup => {
     exports => [qw( current_git_dir find_git_dir is_git_dir )],
     groups  => { default => [qw( current_git_dir )], },
 };

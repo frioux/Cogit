@@ -9,6 +9,7 @@ requires 'IO::Digest';
 requires 'Moo';
 requires 'MooX::Types::MooseLike';
 requires 'namespace::clean';
+requires 'Sub::Exporter::Progressive' => 0.001011;
 
 on test => sub {
    requires 'Archive::Extract';
