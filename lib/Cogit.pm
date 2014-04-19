@@ -1,5 +1,7 @@
 package Cogit;
 
+# ABSTRACT: A truly Pure Perl interface to Git repositories
+
 use Moo;
 use Carp 'confess';
 use Check::ISA;
@@ -467,10 +469,6 @@ sub _add_file {
 
 __END__
 
-=head1 NAME
-
-Git::PurePerl - A Pure Perl interface to Git repositories
-
 =head1 SYNOPSIS
 
     my $git = Cogit->new(
@@ -504,40 +502,29 @@ It was mostly based on Grit L<http://grit.rubyforge.org/>.
 
 =back
 
-=head1 MAINTAINANCE
+=head1 FORK
 
-This module is maintained in git at L<http://github.com/bobtfish/git-pureperl/>.
-
-Patches are welcome, please come speak to one of the L<Gitalist> team
-on C<< #gitalist >>.
-
-=head1 AUTHOR
-
-Leon Brocard <acme@astray.com>
+This module was forked from L<Git::PurePerl> for a couple reasons.  First and
+foremost, C<Git::PurePerl> is based on L<Moose>, which is not pure perl.
+Secondarily the API was very weird, with differentiations made based on whether
+or not an object was in the repo or not.
 
 =head1 CONTRIBUTORS
 
 =over 4
 
-=item Chris Reinhardt
-
-=item Tomas (t0m) Doran
-
-=item Dan (broquaint) Brook
-
 =item Alex Vandiver
+
+=item Chris Reinhardt
 
 =item Dagfinn Ilmari MannsE<aring>ker
 
+=item Dan (broquaint) Brook
+
+=item Leon Brocard
+
+=item Tomas (t0m) Doran
+
 =back
-
-=head1 COPYRIGHT
-
-Copyright (C) 2008, Leon Brocard and the above mentioned contributors.
-
-=head1 LICENSE
-
-This module is free software; you can redistribute it or
-modify it under the same terms as Perl itself.
 
 =cut
