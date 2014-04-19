@@ -1,4 +1,5 @@
 package Git::PurePerl::Pack::WithoutIndex;
+
 use Moo;
 use IO::Digest;
 use MooX::Types::MooseLike::Base 'HashRef';

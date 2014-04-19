@@ -1,4 +1,5 @@
 package Git::PurePerl::Object::Tree;
+
 use Moo;
 use Git::PurePerl::DirectoryEntry;
 use MooX::Types::MooseLike::Base 'ArrayRef', 'InstanceOf';

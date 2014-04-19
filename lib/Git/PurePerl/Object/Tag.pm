@@ -1,4 +1,5 @@
 package Git::PurePerl::Object::Tag;
+
 use Moo;
 use MooX::Types::MooseLike::Base 'Str', 'InstanceOf';
 use namespace::clean;

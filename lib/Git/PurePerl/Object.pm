@@ -1,4 +1,5 @@
 package Git::PurePerl::Object;
+
 use Moo;
 use Digest::SHA;
 use MooX::Types::MooseLike::Base qw( Str Int InstanceOf );

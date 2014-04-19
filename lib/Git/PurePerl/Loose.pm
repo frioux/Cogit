@@ -1,4 +1,5 @@
 package Git::PurePerl::Loose;
+
 use Moo;
 use MooX::Types::MooseLike::Base 'InstanceOf';
 use Compress::Zlib qw(compress uncompress);

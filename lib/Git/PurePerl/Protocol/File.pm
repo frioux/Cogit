@@ -1,4 +1,5 @@
 package Git::PurePerl::Protocol::File;
+
 use Moo;
 use MooX::Types::MooseLike::Base 'Str';
 use IPC::Open2;

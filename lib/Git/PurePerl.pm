@@ -1,4 +1,5 @@
 package Git::PurePerl;
+
 use Moo;
 use Carp 'confess';
 use Check::ISA;

@@ -1,4 +1,5 @@
 package Git::PurePerl::Pack;
+
 use Moo;
 use MooX::Types::MooseLike::Base 'InstanceOf';
 use Path::Class;

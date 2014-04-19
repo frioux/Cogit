@@ -1,4 +1,5 @@
 package Git::PurePerl::Protocol::Git;
+
 use Moo;
 use MooX::Types::MooseLike::Base qw( Int Str );
 use IO::Socket::INET;

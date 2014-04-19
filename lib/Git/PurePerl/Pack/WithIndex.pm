@@ -1,4 +1,5 @@
 package Git::PurePerl::Pack::WithIndex;
+
 use Moo;
 use Git::PurePerl::PackIndex::Version1;
 use Git::PurePerl::PackIndex::Version2;

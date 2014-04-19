@@ -1,4 +1,5 @@
 package Git::PurePerl::Object::Blob;
+
 use Moo;
 use namespace::clean;
 

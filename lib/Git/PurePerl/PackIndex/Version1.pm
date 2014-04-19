@@ -1,4 +1,5 @@
 package Git::PurePerl::PackIndex::Version1;
+
 use Moo;
 use namespace::clean;
 

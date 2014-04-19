@@ -1,4 +1,5 @@
 package Git::PurePerl::Object::Commit;
+
 use Moo;
 use MooX::Types::MooseLike::Base qw( ArrayRef Str InstanceOf );
 use Encode qw/decode/;

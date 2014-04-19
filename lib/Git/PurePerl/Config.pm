@@ -1,4 +1,5 @@
 package Git::PurePerl::Config;
+
 use Moo;
 use MooX::Types::MooseLike::Base qw( InstanceOf );
 use namespace::clean;

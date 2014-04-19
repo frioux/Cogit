@@ -1,4 +1,5 @@
 package Git::PurePerl::Protocol;
+
 use Moo;
 use MooX::Types::MooseLike::Base qw( Str );
 use namespace::clean;

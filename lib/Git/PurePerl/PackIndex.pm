@@ -1,4 +1,5 @@
 package Git::PurePerl::PackIndex;
+
 use Moo;
 use Path::Class 'file';
 use Check::ISA;
