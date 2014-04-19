@@ -1,4 +1,4 @@
-package Git::PurePerl::Actor;
+package Cogit::Actor;
 
 use Moo;
 use MooX::Types::MooseLike::Base 'Str';

@@ -2,10 +2,10 @@
 use strict;
 use warnings;
 use Test::More;
-use Git::PurePerl;
+use Cogit;
 use Path::Class;
 
-use Git::PurePerl::Util qw( find_git_dir current_git_dir );
+use Cogit::Util qw( find_git_dir current_git_dir );
 
 foreach my $directory (qw(test-project test-project-packs test-project-packs2))
 {

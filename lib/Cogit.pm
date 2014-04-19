@@ -1,4 +1,4 @@
-package Git::PurePerl;
+package Cogit;
 
 use Moo;
 use Carp 'confess';
@@ -7,15 +7,15 @@ use MooX::Types::MooseLike::Base qw( InstanceOf ArrayRef Str );
 use Data::Stream::Bulk::Array;
 use Data::Stream::Bulk::Path::Class;
 use File::Find::Rule;
-use Git::PurePerl::Config;
-use Git::PurePerl::Loose;
-use Git::PurePerl::Object::Blob;
-use Git::PurePerl::Object::Commit;
-use Git::PurePerl::Object::Tag;
-use Git::PurePerl::Object::Tree;
-use Git::PurePerl::Pack::WithIndex;
-use Git::PurePerl::Pack::WithoutIndex;
-use Git::PurePerl::Protocol;
+use Cogit::Config;
+use Cogit::Loose;
+use Cogit::Object::Blob;
+use Cogit::Object::Commit;
+use Cogit::Object::Tag;
+use Cogit::Object::Tree;
+use Cogit::Pack::WithIndex;
+use Cogit::Pack::WithoutIndex;
+use Cogit::Protocol;
 use Path::Class;
 use namespace::clean;
 
@@ -34,14 +34,14 @@ has gitdir => (
 
 has loose => (
     is         => 'rw',
-    isa        => InstanceOf['Git::PurePerl::Loose'],
+    isa        => InstanceOf['Cogit::Loose'],
     lazy       => 1,
     builder    => '_build_loose',
 );
 
 has packs => (
     is         => 'rw',
-    isa        => ArrayRef[InstanceOf['Git::PurePerl::Pack']],
+    isa        => ArrayRef[InstanceOf['Cogit::Pack']],
     lazy       => 1,
     builder    => '_build_packs',
 );
@@ -58,11 +58,11 @@ has description => (
 
 has config => (
     is      => 'ro',
-    isa     => InstanceOf['Git::PurePerl::Config'],
+    isa     => InstanceOf['Cogit::Config'],
     lazy    => 1,
     default => sub {
         my $self = shift;
-        Git::PurePerl::Config->new(git => $self);
+        Cogit::Config->new(git => $self);
     }
 );
 
@@ -88,7 +88,7 @@ sub BUILD {
 sub _build_loose {
     my $self = shift;
     my $loose_dir = dir( $self->gitdir, 'objects' );
-    return Git::PurePerl::Loose->new( directory => $loose_dir );
+    return Cogit::Loose->new( directory => $loose_dir );
 }
 
 sub _build_packs {
@@ -98,7 +98,7 @@ sub _build_packs {
     foreach my $filename ( $pack_dir->children ) {
         next unless $filename =~ /\.pack$/;
         push @packs,
-            Git::PurePerl::Pack::WithIndex->new( filename => $filename );
+            Cogit::Pack::WithIndex->new( filename => $filename );
     }
     return \@packs;
 }
@@ -256,7 +256,7 @@ sub get_object_loose {
 sub create_object {
     my ( $self, $sha1, $kind, $size, $content ) = @_;
     if ( $kind eq 'commit' ) {
-        return Git::PurePerl::Object::Commit->new(
+        return Cogit::Object::Commit->new(
             sha1    => $sha1,
             kind    => $kind,
             size    => $size,
@@ -264,7 +264,7 @@ sub create_object {
             git     => $self,
         );
     } elsif ( $kind eq 'tree' ) {
-        return Git::PurePerl::Object::Tree->new(
+        return Cogit::Object::Tree->new(
             sha1    => $sha1,
             kind    => $kind,
             size    => $size,
@@ -272,7 +272,7 @@ sub create_object {
             git     => $self,
         );
     } elsif ( $kind eq 'blob' ) {
-        return Git::PurePerl::Object::Blob->new(
+        return Cogit::Object::Blob->new(
             sha1    => $sha1,
             kind    => $kind,
             size    => $size,
@@ -280,7 +280,7 @@ sub create_object {
             git     => $self,
         );
     } elsif ( $kind eq 'tag' ) {
-        return Git::PurePerl::Object::Tag->new(
+        return Cogit::Object::Tag->new(
             sha1    => $sha1,
             kind    => $kind,
             size    => $size,
@@ -436,7 +436,7 @@ sub clone {
         $remote = shift;
     }
 
-    my $protocol = Git::PurePerl::Protocol
+    my $protocol = Cogit::Protocol
         ->new( remote => $remote )
         ->connect;
 
@@ -449,7 +449,7 @@ sub clone {
     $self->_add_file( $filename, $data );
 
     my $pack
-        = Git::PurePerl::Pack::WithoutIndex->new( filename => $filename );
+        = Cogit::Pack::WithoutIndex->new( filename => $filename );
     $pack->create_index();
 
     $self->update_ref( master => $head );
@@ -473,7 +473,7 @@ Git::PurePerl - A Pure Perl interface to Git repositories
 
 =head1 SYNOPSIS
 
-    my $git = Git::PurePerl->new(
+    my $git = Cogit->new(
         directory => '/path/to/git/'
     );
     $git->master->committer;

@@ -1,4 +1,4 @@
-package Git::PurePerl::DirectoryEntry;
+package Cogit::DirectoryEntry;
 
 use Moo;
 use MooX::Types::MooseLike::Base 'Str', 'InstanceOf';
@@ -24,7 +24,7 @@ has sha1 => (
 
 has git => (
     is => 'rw',
-    isa => InstanceOf['Git::PurePerl'],
+    isa => InstanceOf['Cogit'],
     weak_ref => 1,
 );
 

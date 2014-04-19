@@ -1,4 +1,4 @@
-package Git::PurePerl::Config;
+package Cogit::Config;
 
 use Moo;
 use MooX::Types::MooseLike::Base qw( InstanceOf );
@@ -10,7 +10,7 @@ has '+confname' => ( default => "gitconfig" );
 
 has git => (
     is => 'ro',
-    isa => InstanceOf['Git::PurePerl'],
+    isa => InstanceOf['Cogit'],
     required => 1,
     weak_ref => 1,
 );

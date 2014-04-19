@@ -12,7 +12,7 @@ exit 0;
         plan skip_all => 'Windows does NOT have git-daemon yet';
     }
 }
-use Git::PurePerl;
+use Cogit;
 use IO::File;
 use Path::Class;
 use File::Temp;
@@ -21,8 +21,8 @@ use File::Temp;
 
 my $directory = File::Temp->newdir;
 
-my $git = Git::PurePerl->init( directory => $directory );
-isa_ok( $git, 'Git::PurePerl', 'can init' );
+my $git = Cogit->init( directory => $directory );
+isa_ok( $git, 'Cogit', 'can init' );
 
 $git->clone( 'localhost', '/test-project' );
 

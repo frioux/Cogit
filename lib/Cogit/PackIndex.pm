@@ -1,4 +1,4 @@
-package Git::PurePerl::PackIndex;
+package Cogit::PackIndex;
 
 use Moo;
 use Path::Class 'file';

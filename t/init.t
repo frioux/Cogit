@@ -2,8 +2,8 @@
 use strict;
 use warnings;
 use Test::More;
-use Git::PurePerl;
-use Git::PurePerl::DirectoryEntry;
+use Cogit;
+use Cogit::DirectoryEntry;
 use File::Temp;
 use Path::Class;
 
@@ -15,12 +15,12 @@ for my $directory (@dirs) {
 
     my $git;
     if ( $directory eq $dirs[1] ) {
-        $git = Git::PurePerl->init( gitdir => $directory );
+        $git = Cogit->init( gitdir => $directory );
     } else {
-        $git = Git::PurePerl->init( directory => $directory );
+        $git = Cogit->init( directory => $directory );
     }
 
-    isa_ok( $git, 'Git::PurePerl', 'can init' );
+    isa_ok( $git, 'Cogit', 'can init' );
 
     is( $git->description,
         'Unnamed repository; edit this file to name it for gitweb.' );
@@ -28,29 +28,29 @@ for my $directory (@dirs) {
     is( $git->all_sha1s->all,   0, 'does not contain any sha1s' );
     is( $git->all_objects->all, 0, 'does not contain any objects' );
 
-    my $hello = Git::PurePerl::Object::Blob->new( content => 'hello' );
+    my $hello = Cogit::Object::Blob->new( content => 'hello' );
     $git->put_object($hello);
     is( $hello->sha1, 'b6fc4c620b67d95f953a5c1c1230aaab5db5a1b0' );
     is( $git->get_object('b6fc4c620b67d95f953a5c1c1230aaab5db5a1b0')->content,
         'hello' );
 
-    my $there = Git::PurePerl::Object::Blob->new( content => 'there' );
+    my $there = Cogit::Object::Blob->new( content => 'there' );
     $git->put_object($there);
     is( $there->sha1, 'c78ee1a5bdf46d22da300b68d50bc45c587c3293' );
     is( $git->get_object('c78ee1a5bdf46d22da300b68d50bc45c587c3293')->content,
         'there' );
 
-    my $hello_de = Git::PurePerl::DirectoryEntry->new(
+    my $hello_de = Cogit::DirectoryEntry->new(
         mode     => '100644',
         filename => 'hello.txt',
         sha1     => $hello->sha1,
     );
-    my $there_de = Git::PurePerl::DirectoryEntry->new(
+    my $there_de = Cogit::DirectoryEntry->new(
         mode     => '100644',
         filename => 'there.txt',
         sha1     => $there->sha1,
     );
-    my $tree = Git::PurePerl::Object::Tree->new(
+    my $tree = Cogit::Object::Tree->new(
         directory_entries => [ $hello_de, $there_de ] );
     is( $tree->sha1, '6d991aebc86bd09e86d74bb84bb9ebfb97e18026' );
     $git->put_object($tree);
@@ -68,11 +68,11 @@ for my $directory (@dirs) {
     is( $directory_entry2->filename, 'there.txt' );
     is( $directory_entry2->sha1, 'c78ee1a5bdf46d22da300b68d50bc45c587c3293' );
 
-    my $actor = Git::PurePerl::Actor->new(
+    my $actor = Cogit::Actor->new(
         name  => 'Your Name Comes Here',
         email => 'you@yourdomain.example.com'
     );
-    my $commit = Git::PurePerl::Object::Commit->new(
+    my $commit = Cogit::Object::Commit->new(
         git            => $git,
         tree           => $tree->sha1,
         author         => $actor,
@@ -95,10 +95,10 @@ CONTENT
     my $commit2
         = $git->get_object('860caea5ba298bb4f1df9a80fad84951fcc7db72');
     is( $commit2->tree_sha1, $tree->sha1 );
-    isa_ok( $commit2->author, 'Git::PurePerl::Actor' );
+    isa_ok( $commit2->author, 'Cogit::Actor' );
     is( $commit2->author->name,  'Your Name Comes Here' );
     is( $commit2->author->email, 'you@yourdomain.example.com' );
-    isa_ok( $commit2->committer, 'Git::PurePerl::Actor' );
+    isa_ok( $commit2->committer, 'Cogit::Actor' );
     is( $commit2->committer->name,       'Your Name Comes Here' );
     is( $commit2->committer->email,      'you@yourdomain.example.com' );
     is( $commit2->authored_time->epoch,  1240341681 );
@@ -106,11 +106,11 @@ CONTENT
     is( $commit2->comment,               'Fix' );
 
     if ( $directory eq $dirs[1] ) {
-        $git = Git::PurePerl->new( gitdir => $directory );
+        $git = Cogit->new( gitdir => $directory );
     } else {
-        $git = Git::PurePerl->new( directory => $directory );
+        $git = Cogit->new( directory => $directory );
     }
-    isa_ok( $git, 'Git::PurePerl', 'can get object' );
+    isa_ok( $git, 'Cogit', 'can get object' );
 
     is( $git->all_sha1s->all,   4, 'contains four sha1s' );
     is( $git->all_objects->all, 4, 'contains four objects' );
@@ -136,24 +136,24 @@ CONTENT
 
     isa_ok(
         $git->ref('refs/heads/master'),
-        'Git::PurePerl::Object::Commit',
+        'Cogit::Object::Commit',
         'have master commit'
     );
     is( $git->ref('refs/heads/master')->sha1,
         $commit->sha1, 'master points to our commit' );
 
-    my $here = Git::PurePerl::Object::Blob->new( git => $git, content => 'here' );
+    my $here = Cogit::Object::Blob->new( git => $git, content => 'here' );
     $git->put_object($here);
 
-    my $here_de = Git::PurePerl::DirectoryEntry->new(
+    my $here_de = Cogit::DirectoryEntry->new(
         mode     => '100644',
         filename => 'there.txt',
         sha1     => $here->sha1,
     );
-    $tree = Git::PurePerl::Object::Tree->new(
+    $tree = Cogit::Object::Tree->new(
         directory_entries => [ $hello_de, $here_de ] );
     $git->put_object($tree);
-    my $newcommit = Git::PurePerl::Object::Commit->new(
+    my $newcommit = Cogit::Object::Commit->new(
         git => $git,
         tree           => $tree->sha1,
         parent         => $commit->sha1,
@@ -166,10 +166,10 @@ CONTENT
     $git->put_object($newcommit);
 
     my $newcommit2 = $git->get_object( $newcommit->sha1 );
-    isa_ok( $newcommit2->author, 'Git::PurePerl::Actor' );
+    isa_ok( $newcommit2->author, 'Cogit::Actor' );
     is( $newcommit2->author->name,  'Your Name Comes Here' );
     is( $newcommit2->author->email, 'you@yourdomain.example.com' );
-    isa_ok( $newcommit2->committer, 'Git::PurePerl::Actor' );
+    isa_ok( $newcommit2->committer, 'Cogit::Actor' );
     is( $newcommit2->committer->name,       'Your Name Comes Here' );
     is( $newcommit2->committer->email,      'you@yourdomain.example.com' );
     is( $newcommit2->authored_time->epoch,  1240341683 );

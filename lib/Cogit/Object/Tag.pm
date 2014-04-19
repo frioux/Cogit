@@ -1,10 +1,10 @@
-package Git::PurePerl::Object::Tag;
+package Cogit::Object::Tag;
 
 use Moo;
 use MooX::Types::MooseLike::Base 'Str', 'InstanceOf';
 use namespace::clean;
 
-extends 'Git::PurePerl::Object';
+extends 'Cogit::Object';
 
 has '+kind' => ( default => sub { 'tag' } );
 
@@ -20,7 +20,7 @@ has tag => (
 
 has tagger => (
     is => 'rw',
-    isa => InstanceOf['Git::PurePerl::Actor'],
+    isa => InstanceOf['Cogit::Actor'],
 );
 
 has tagged_time => (
@@ -54,7 +54,7 @@ sub BUILD {
             my ($email, $epoch, $tz) = splice(@data, -3);
             my $name = join(' ', @data);
             my $actor =
-                Git::PurePerl::Actor->new( name => $name, email => $email );
+                Cogit::Actor->new( name => $name, email => $email );
             $self->tagger($actor);
             my $dt= DateTime->from_epoch( epoch => $epoch, time_zone => $tz );
             $self->tagged_time($dt);

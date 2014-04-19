@@ -2,10 +2,10 @@
 use strict;
 use warnings;
 use Test::More;
-use Git::PurePerl;
+use Cogit;
 use Test::utf8;
 
-my $git = Git::PurePerl->new( directory => "test-encoding" );
+my $git = Cogit->new( directory => "test-encoding" );
 
 for (
     [$git->master, "utf-8"],

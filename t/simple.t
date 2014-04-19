@@ -2,14 +2,14 @@
 use strict;
 use warnings;
 use Test::More;
-use Git::PurePerl;
+use Cogit;
 use Path::Class;
 
 my $checkout_directory = dir('t/checkout');
 
 foreach my $directory (qw(test-project test-project-packs test-project-packs2))
 {
-    my $git = Git::PurePerl->new( directory => $directory );
+    my $git = Cogit->new( directory => $directory );
     like( $git->master_sha1, qr/^[a-z0-9]{40}$/ );
     my $commit = $git->master;
 
@@ -18,8 +18,8 @@ foreach my $directory (qw(test-project test-project-packs test-project-packs2))
     like( $commit->sha1, qr/^[a-z0-9]{40}$/ );
     is( $commit->tree_sha1, '37b4fcd62571f07408e830f455268891f95cecf5' );
     like( $commit->parent_sha1, qr/^[a-z0-9]{40}$/ );
-    isa_ok( $commit->author,    'Git::PurePerl::Actor' );
-    isa_ok( $commit->committer, 'Git::PurePerl::Actor' );
+    isa_ok( $commit->author,    'Cogit::Actor' );
+    isa_ok( $commit->committer, 'Cogit::Actor' );
     is( $commit->author->name,    'Your Name Comes Here' );
     is( $commit->committer->name, 'Your Name Comes Here' );
     isa_ok( $commit->authored_time, 'DateTime' );
@@ -115,12 +115,12 @@ hello world, again
     );
 
     is_deeply( [ $git->ref_names ], ['refs/heads/master'], 'have ref names' );
-    isa_ok( ( $git->refs )[0], 'Git::PurePerl::Object::Commit', 'have refs' );
+    isa_ok( ( $git->refs )[0], 'Cogit::Object::Commit', 'have refs' );
     ok( $git->refs_sha1,                     'have refs_sha1' );
     ok( $git->ref_sha1('refs/heads/master'), 'have ref_sha1 for master' );
     isa_ok(
         $git->ref('refs/heads/master'),
-        'Git::PurePerl::Object::Commit',
+        'Cogit::Object::Commit',
         'have ref master'
     );
 }

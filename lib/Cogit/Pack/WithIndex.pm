@@ -1,14 +1,14 @@
-package Git::PurePerl::Pack::WithIndex;
+package Cogit::Pack::WithIndex;
 
 use Moo;
-use Git::PurePerl::PackIndex::Version1;
-use Git::PurePerl::PackIndex::Version2;
+use Cogit::PackIndex::Version1;
+use Cogit::PackIndex::Version2;
 use MooX::Types::MooseLike::Base 'InstanceOf';
 use Path::Class;
 use Check::ISA;
 use namespace::clean;
 
-extends 'Git::PurePerl::Pack';
+extends 'Cogit::Pack';
 
 has index_filename => (
     is => 'rw',
@@ -18,7 +18,7 @@ has index_filename => (
 
 has index => (
     is => 'rw',
-    isa => InstanceOf['Git::PurePerl::PackIndex'],
+    isa => InstanceOf['Cogit::PackIndex'],
 );
 
 sub BUILD {
@@ -37,7 +37,7 @@ sub BUILD {
     if ( $signature eq "\377tOc" ) {
         if ( $version == 2 ) {
             $self->index(
-                Git::PurePerl::PackIndex::Version2->new(
+                Cogit::PackIndex::Version2->new(
                     filename => $index_filename
                 )
             );
@@ -46,7 +46,7 @@ sub BUILD {
         }
     } else {
         $self->index(
-            Git::PurePerl::PackIndex::Version1->new(
+            Cogit::PackIndex::Version1->new(
                 filename => $index_filename
             )
         );

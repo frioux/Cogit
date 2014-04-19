@@ -1,11 +1,7 @@
 use strict;
 use warnings;
 
-package Git::PurePerl::Util;
-
-# FILENAME: Util.pm
-# CREATED: 29/05/12 21:46:21 by Kent Fredric (kentnl) <kentfredric@gmail.com>
-# ABSTRACT: Helper tools for Git::PurePerl
+package Cogit::Util;
 
 use Sub::Exporter -setup => {
     exports => [qw( current_git_dir find_git_dir is_git_dir )],
@@ -15,10 +11,10 @@ use Path::Class qw( dir );
 
 =head1 SYNOPSIS
 
-    use Git::PurePerl::Util;
-    use Git::PurePerl;
+    use Cogit::Util;
+    use Cogit;
 
-    my $repo = Git::PurePerl->new(
+    my $repo = Cogit->new(
         gitdir => current_git_dir(),
     );
 

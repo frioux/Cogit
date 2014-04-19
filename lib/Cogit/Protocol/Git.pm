@@ -1,11 +1,11 @@
-package Git::PurePerl::Protocol::Git;
+package Cogit::Protocol::Git;
 
 use Moo;
 use MooX::Types::MooseLike::Base qw( Int Str );
 use IO::Socket::INET;
 use namespace::clean;
 
-extends 'Git::PurePerl::Protocol';
+extends 'Cogit::Protocol';
 
 has hostname => (
     is => 'ro',

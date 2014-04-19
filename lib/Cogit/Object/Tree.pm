@@ -1,17 +1,17 @@
-package Git::PurePerl::Object::Tree;
+package Cogit::Object::Tree;
 
 use Moo;
-use Git::PurePerl::DirectoryEntry;
+use Cogit::DirectoryEntry;
 use MooX::Types::MooseLike::Base 'ArrayRef', 'InstanceOf';
 use namespace::clean;
 
-extends 'Git::PurePerl::Object';
+extends 'Cogit::Object';
 
 has '+kind' => ( default => sub { 'tree' } );
 
 has directory_entries => (
     is         => 'rw',
-    isa        => ArrayRef[InstanceOf['Git::PurePerl::DirectoryEntry']],
+    isa        => ArrayRef[InstanceOf['Cogit::DirectoryEntry']],
 );
 
 sub _build_content {
@@ -42,7 +42,7 @@ sub BUILD {
         my $sha1 = unpack( 'H*', substr( $content, 0, 20 ) );
         $content = substr( $content, 20 );
         push @directory_entries,
-            Git::PurePerl::DirectoryEntry->new(
+            Cogit::DirectoryEntry->new(
             mode     => $mode,
             filename => $filename,
             sha1     => $sha1,

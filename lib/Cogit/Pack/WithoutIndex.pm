@@ -1,4 +1,4 @@
-package Git::PurePerl::Pack::WithoutIndex;
+package Cogit::Pack::WithoutIndex;
 
 use Moo;
 use IO::Digest;
@@ -6,7 +6,7 @@ use MooX::Types::MooseLike::Base 'HashRef';
 use Carp 'confess';
 use namespace::clean;
 
-extends 'Git::PurePerl::Pack';
+extends 'Cogit::Pack';
 
 has offsets => (
     is => 'rw',

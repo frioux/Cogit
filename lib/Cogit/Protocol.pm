@@ -1,12 +1,12 @@
-package Git::PurePerl::Protocol;
+package Cogit::Protocol;
 
 use Moo;
 use MooX::Types::MooseLike::Base qw( Str );
 use namespace::clean;
 
-use Git::PurePerl::Protocol::Git;
-use Git::PurePerl::Protocol::SSH;
-use Git::PurePerl::Protocol::File;
+use Cogit::Protocol::Git;
+use Cogit::Protocol::SSH;
+use Cogit::Protocol::File;
 
 has remote => (
     is => 'ro',
@@ -24,19 +24,19 @@ sub connect {
 
     my $ret;
     if ($self->remote =~ m{^git://(.*?@)?(.*?)(/.*)}) {
-        $ret = Git::PurePerl::Protocol::Git->new(
+        $ret = Cogit::Protocol::Git->new(
             @args,
             hostname => $2,
             project => $3,
         );
     } elsif ($self->remote =~ m{^file://(/.*)}) {
-        $ret = Git::PurePerl::Protocol::File->new(
+        $ret = Cogit::Protocol::File->new(
             @args,
             path => $1,
         );
     } elsif ($self->remote =~ m{^ssh://(?:(.*?)@)?(.*?)(/.*)}
                  or $self->remote =~ m{^(?:(.*?)@)?(.*?):(.*)}) {
-        $ret = Git::PurePerl::Protocol::SSH->new(
+        $ret = Cogit::Protocol::SSH->new(
             @args,
             $1 ? (username => $1) : (),
             hostname => $2,

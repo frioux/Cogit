@@ -1,13 +1,13 @@
-package Git::PurePerl::Object::Commit;
+package Cogit::Object::Commit;
 
 use Moo;
 use MooX::Types::MooseLike::Base qw( ArrayRef Str InstanceOf );
 use Encode qw/decode/;
-use Git::PurePerl::Actor;
+use Cogit::Actor;
 use DateTime;
 use namespace::clean;
 
-extends 'Git::PurePerl::Object';
+extends 'Cogit::Object';
 
 has '+git' => ( required => 1 );
 has '+kind' => ( default => sub { 'commit' } );
@@ -32,7 +32,7 @@ has parent_sha1s => (
 
 has author => (
     is => 'rw',
-    isa => InstanceOf['Git::PurePerl::Actor'],
+    isa => InstanceOf['Cogit::Actor'],
 );
 
 has authored_time => (
@@ -42,7 +42,7 @@ has authored_time => (
 
 has committer => (
     is => 'rw',
-    isa => InstanceOf['Git::PurePerl::Actor'],
+    isa => InstanceOf['Cogit::Actor'],
 );
 
 has committed_time => (
@@ -89,7 +89,7 @@ sub BUILD {
                 $email = substr( $email, 1, -1 );
                 my $name = join ' ', @data;
                 my $actor
-                    = Git::PurePerl::Actor->new( name => $name, email => $email );
+                    = Cogit::Actor->new( name => $name, email => $email );
                 $self->$key($actor);
                 $key = $method_map{$key};
                 my $dt

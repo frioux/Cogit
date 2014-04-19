@@ -1,4 +1,4 @@
-package Git::PurePerl::Object;
+package Cogit::Object;
 
 use Moo;
 use Digest::SHA;
@@ -37,7 +37,7 @@ has sha1 => (
 
 has git => (
     is => 'rw',
-    isa => InstanceOf['Git::PurePerl'],
+    isa => InstanceOf['Cogit'],
     weak_ref => 1,
 );
 

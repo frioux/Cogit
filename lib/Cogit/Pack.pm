@@ -1,4 +1,4 @@
-package Git::PurePerl::Pack;
+package Cogit::Pack;
 
 use Moo;
 use MooX::Types::MooseLike::Base 'InstanceOf';
