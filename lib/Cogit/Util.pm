@@ -9,31 +9,6 @@ use Sub::Exporter::Progressive -setup => {
 };
 use Path::Class qw( dir );
 
-=head1 SYNOPSIS
-
-    use Cogit::Util;
-    use Cogit;
-
-    my $repo = Cogit->new(
-        gitdir => current_git_dir(),
-    );
-
-=cut
-
-=head1 FUNCTIONS
-
-=head2 is_git_dir
-
-Determines if the given C<$dir> has the basic requirements of a Git repository dir.
-
-( ie: either a checkouts C<.git> folder, or a bare repository )
-
-    if ( is_git_dir( $dir ) ) {
-        ...
-    }
-
-=cut
-
 sub is_git_dir {
     my ($dir) = @_;
     return if not -e $dir->subdir('objects');
@@ -41,20 +16,6 @@ sub is_git_dir {
     return if not -e $dir->file('HEAD');
     return 1;
 }
-
-=head2 find_git_dir
-
-    my $dir = find_git_dir( $subdir );
-
-Finds the closest C<.git> or bare tree that is either at C<$subdir> or somewhere above C<$subdir>
-
-If C<$subdir> is inside a 'bare' repo, returns the path to that repo.
-
-If C<$subdir> is inside a checkout, returns the path to the checkouts C<.git> dir.
-
-If C<$subdir> is not inside a git repo, returns a false value.
-
-=cut
 
 sub find_git_dir {
     my $start = shift;
@@ -71,6 +32,49 @@ sub find_git_dir {
     return undef;
 }
 
+sub current_git_dir {
+    return find_git_dir( dir('.') );
+}
+
+1;
+
+__END__
+
+=pod
+
+=head1 SYNOPSIS
+
+    use Cogit::Util;
+    use Cogit;
+
+    my $repo = Cogit->new(
+        gitdir => current_git_dir(),
+    );
+
+=head1 FUNCTIONS
+
+=head2 is_git_dir
+
+Determines if the given C<$dir> has the basic requirements of a Git repository dir.
+
+( ie: either a checkouts C<.git> folder, or a bare repository )
+
+    if ( is_git_dir( $dir ) ) {
+        ...
+    }
+
+=head2 find_git_dir
+
+    my $dir = find_git_dir( $subdir );
+
+Finds the closest C<.git> or bare tree that is either at C<$subdir> or somewhere above C<$subdir>
+
+If C<$subdir> is inside a 'bare' repo, returns the path to that repo.
+
+If C<$subdir> is inside a checkout, returns the path to the checkouts C<.git> dir.
+
+If C<$subdir> is not inside a git repo, returns a false value.
+
 =head2 current_git_dir
 
 Finds the closest C<.git> or bare tree by walking up parents.
@@ -84,10 +88,3 @@ If C<$CWD> is inside a git checkout, it will return the path to the C<.git> fold
 If C<$CWD> is not inside any recognisable git repo, will return a false value.
 
 =cut
-
-sub current_git_dir {
-    return find_git_dir( dir('.') );
-}
-
-1;
-

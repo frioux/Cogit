@@ -219,3 +219,18 @@ sub patch_delta_header_size {
 
 1;
 
+=attr C<filename>
+
+=attr C<fh>
+
+=method C<all_sha1s>
+
+=method C<unpack_object>
+
+=method C<read_compressed>
+
+=method C<unpack_deltified>
+
+=method C<patch_delta>
+
+=method C<patch_delta_header_size>
