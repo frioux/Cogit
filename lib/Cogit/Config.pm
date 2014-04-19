@@ -2,6 +2,7 @@ package Cogit::Config;
 
 use Moo;
 use MooX::Types::MooseLike::Base qw( InstanceOf );
+use Path::Class;
 use namespace::clean;
 
 extends 'Config::GitLike';
@@ -17,7 +18,7 @@ has git => (
 
 sub dir_file {
     my $self = shift;
-    return $self->git->gitdir->file("config");
+    return dir($self->git->gitdir)->file("config");
 };
 
 1;

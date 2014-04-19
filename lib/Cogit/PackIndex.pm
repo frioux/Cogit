@@ -1,7 +1,6 @@
 package Cogit::PackIndex;
 
 use Moo;
-use Path::Class 'file';
 use Check::ISA;
 use IO::File;
 use MooX::Types::MooseLike::Base qw( InstanceOf ArrayRef Str Int );
@@ -9,8 +8,6 @@ use namespace::clean;
 
 has filename => (
     is => 'ro',
-    isa      => InstanceOf['Path::Class::File'],
-    coerce   => sub { file($_[0]) },
     required => 1,
 );
 

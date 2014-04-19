@@ -9,9 +9,7 @@ use namespace::clean;
 
 has directory => (
     is       => 'ro',
-    isa      => InstanceOf['Path::Class::Dir'],
     required => 1,
-    coerce   => sub { dir($_[0]) if !obj($_[0], 'Path::Class::Dir'); $_[0]; },
 );
 
 sub get_object {

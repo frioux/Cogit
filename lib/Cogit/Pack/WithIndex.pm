@@ -4,7 +4,6 @@ use Moo;
 use Cogit::PackIndex::Version1;
 use Cogit::PackIndex::Version2;
 use MooX::Types::MooseLike::Base 'InstanceOf';
-use Path::Class;
 use Check::ISA;
 use namespace::clean;
 
@@ -12,8 +11,6 @@ extends 'Cogit::Pack';
 
 has index_filename => (
     is => 'rw',
-    coerce => sub { file($_[0]) if !obj($_[0], 'Path::Class::File'); $_[0]; },
-    #isa => InstanceOf['Path::Class::File'],
 );
 
 has index => (

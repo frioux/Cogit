@@ -5,6 +5,7 @@ requires 'Config::GitLike';
 requires 'Data::Stream::Bulk';
 requires 'DateTime';
 requires 'File::Find::Rule';
+requires 'IO::All';
 requires 'IO::Digest';
 requires 'Moo';
 requires 'MooX::Types::MooseLike';

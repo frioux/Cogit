@@ -19,18 +19,13 @@ use Cogit::Pack::WithIndex;
 use Cogit::Pack::WithoutIndex;
 use Cogit::Protocol;
 use Path::Class;
+use IO::All;
 use namespace::clean;
 
-has directory => (
-    is       => 'ro',
-    isa      => InstanceOf['Path::Class::Dir'],
-    coerce   => sub { return dir($_[0]); },
-);
+has directory => ( is => 'ro' );
 
 has gitdir => (
     is       => 'ro',
-    isa      => InstanceOf['Path::Class::Dir'],
-    coerce   => sub { return dir($_[0]); },
     required => 1,
 );
 
@@ -157,7 +152,7 @@ sub ref_sha1 {
 
     if ($wantref eq "HEAD") {
         my $file = file($self->gitdir, 'HEAD');
-        my $sha1 = file($file)->slurp
+        my $sha1 = io->file($file)->slurp
             || confess("Error reading $file: $!");
         chomp $sha1;
         return _ensure_sha1_is_sha1( $self, $sha1 );
@@ -166,7 +161,7 @@ sub ref_sha1 {
     foreach my $file ( File::Find::Rule->new->file->in($dir) ) {
         my $ref = 'refs/' . file($file)->relative($dir)->as_foreign('Unix');
         if ( $ref eq $wantref ) {
-            my $sha1 = file($file)->slurp
+            my $sha1 = io->file($file)->slurp
                 || confess("Error reading $file: $!");
             chomp $sha1;
             return _ensure_sha1_is_sha1( $self, $sha1 );
@@ -296,7 +291,7 @@ sub create_object {
 
 sub all_sha1s {
     my $self = shift;
-    my $dir = dir( $self->gitdir, 'objects' );
+    my $dir = io->dir( $self->gitdir, 'objects' );
 
     my @streams;
     push @streams, $self->loose->all_sha1s;
@@ -355,15 +350,15 @@ sub init {
         if ( not defined $arguments{gitdir} ) {
             $git_dir = $arguments{gitdir} = dir( $directory, '.git' );
         }
-        dir($directory)->mkpath;
+        io->dir($directory)->mkpath;
     }
 
-    dir($git_dir)->mkpath;
-    dir( $git_dir, 'refs',    'tags' )->mkpath;
-    dir( $git_dir, 'objects', 'info' )->mkpath;
-    dir( $git_dir, 'objects', 'pack' )->mkpath;
-    dir( $git_dir, 'branches' )->mkpath;
-    dir( $git_dir, 'hooks' )->mkpath;
+    io->dir($git_dir)->mkpath;
+    io->dir( $git_dir, 'refs',    'tags' )->mkpath;
+    io->dir( $git_dir, 'objects', 'info' )->mkpath;
+    io->dir( $git_dir, 'objects', 'pack' )->mkpath;
+    io->dir( $git_dir, 'branches' )->mkpath;
+    io->dir( $git_dir, 'hooks' )->mkpath;
 
     my $bare = defined($directory) ? 'false' : 'true';
     $class->_add_file(
@@ -395,7 +390,7 @@ sub init {
     $class->_add_file( file( $git_dir, 'hooks', 'update' ),
         "# add shell script and make executable to enable\n" );
 
-    dir( $git_dir, 'info' )->mkpath;
+    io->dir( $git_dir, 'info' )->mkpath;
     $class->_add_file( file( $git_dir, 'info', 'exclude' ),
         "# *.[oa]\n# *~\n" );
 
@@ -417,7 +412,7 @@ sub checkout {
             chmod( oct( '0' . $mode ), $filename )
                 || die "Error chmoding $filename to $mode: $!";
         } elsif ( $object->kind eq 'tree' ) {
-            dir($filename)->mkpath;
+            io->dir($filename)->mkpath;
             $self->checkout( $filename, $object );
         } else {
             die $object->kind;

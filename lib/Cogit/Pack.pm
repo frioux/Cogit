@@ -2,7 +2,6 @@ package Cogit::Pack;
 
 use Moo;
 use MooX::Types::MooseLike::Base 'InstanceOf';
-use Path::Class;
 use Compress::Raw::Zlib;
 use IO::File;
 use Carp 'confess';
@@ -11,9 +10,7 @@ use namespace::clean;
 
 has filename => (
     is => 'ro',
-    isa => InstanceOf['Path::Class::File'],
     required => 1,
-    coerce   => sub { file($_[0]) if !obj($_[0], 'Path::Class::File'); $_[0]; },
 );
 
 has fh => (
