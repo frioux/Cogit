@@ -478,6 +478,11 @@ __END__
     $git->master->comment;
     $git->get_object($git->master->tree);
 
+=head1 HERE BE DRAGONS
+
+This module's API is not yet battle tested.  Feel free to try it out, but don't
+depend on it for serious stuff yet.  Comments regarding the API very welcome.
+
 =head1 DESCRIPTION
 
 This module is a Pure Perl interface to Git repositories.
