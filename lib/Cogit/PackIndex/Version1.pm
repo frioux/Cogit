@@ -26,7 +26,7 @@ sub all_sha1s {
 
     my $pos = $OffsetStart;
     $fh->seek( $pos, 0 ) || die $!;
-    foreach my $i ( 1 .. $self->size ) {
+    for my $i ( 1 .. $self->size ) {
         $fh->read( my $data, $OffsetSize ) || die $!;
         my $offset = unpack( 'N', $data );
         $fh->read( $data, $SHA1Size ) || die $!;

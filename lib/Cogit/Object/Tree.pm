@@ -17,7 +17,7 @@ has directory_entries => (
 sub _build_content {
     my $self = shift;
     my $content;
-    foreach my $de ( @{$self->directory_entries} ) {
+    for my $de ( @{$self->directory_entries} ) {
         $content
             .= $de->mode . ' '
             . $de->filename . "\0"

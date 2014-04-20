@@ -25,16 +25,16 @@ sub create_index {
 
     my $offsets = $self->create_index_offsets;
     my @fan_out_table;
-    foreach my $sha1 ( sort keys %$offsets ) {
+    for my $sha1 ( sort keys %$offsets ) {
         my $offset = $offsets->{$sha1};
         my $slot = unpack( 'C', pack( 'H*', $sha1 ) );
         $fan_out_table[$slot]++;
     }
-    foreach my $i ( 0 .. 255 ) {
+    for my $i ( 0 .. 255 ) {
         $index_fh->print( pack( 'N', $fan_out_table[$i] || 0 ) ) || die $!;
         $fan_out_table[ $i + 1 ] += $fan_out_table[$i] || 0;
     }
-    foreach my $sha1 ( sort keys %$offsets ) {
+    for my $sha1 ( sort keys %$offsets ) {
         my $offset = $offsets->{$sha1};
         $index_fh->print( pack( 'N',  $offset ) ) || die $!;
         $index_fh->print( pack( 'H*', $sha1 ) )   || die $!;
@@ -65,7 +65,7 @@ sub create_index_offsets {
     my %offsets;
     $self->offsets( \%offsets );
 
-    foreach my $i ( 1 .. $objects ) {
+    for my $i ( 1 .. $objects ) {
         my $offset = $fh->tell || die "Error telling filehandle: $!";
         my $obj_offset = $offset;
         $fh->read( my $c, 1 ) || die "Error reading from pack: $!";

@@ -138,7 +138,7 @@ sub read_line {
     # warn "read prefix [$prefix]";
 
     my $len = 0;
-    foreach my $n ( 0 .. 3 ) {
+    for my $n ( 0 .. 3 ) {
         my $c = substr( $prefix, $n, 1 );
         $len <<= 4;
 

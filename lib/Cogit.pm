@@ -97,7 +97,7 @@ sub _build_packs {
     my $self = shift;
     my $pack_dir = dir( $self->gitdir, 'objects', 'pack' );
     my @packs;
-    foreach my $filename ( $pack_dir->children ) {
+    for my $filename ( $pack_dir->children ) {
         next unless $filename =~ /\.pack$/;
         push @packs,
             Cogit::Pack::WithIndex->new( filename => $filename );
@@ -108,7 +108,7 @@ sub _build_packs {
 sub _ref_names_recursive {
     my ( $dir, $base, $names ) = @_;
 
-    foreach my $file ( $dir->children ) {
+    for my $file ( $dir->children ) {
         if ( -d $file ) {
             my $reldir  = $file->relative($dir);
             my $subbase = $base . $reldir . "/";
@@ -122,7 +122,7 @@ sub _ref_names_recursive {
 sub ref_names {
     my $self = shift;
     my @names;
-    foreach my $type (qw(heads remotes tags)) {
+    for my $type (qw(heads remotes tags)) {
         my $dir = dir( $self->gitdir, 'refs', $type );
         next unless -d $dir;
         my $base = "refs/$type/";
@@ -130,7 +130,7 @@ sub ref_names {
     }
     my $packed_refs = file( $self->gitdir, 'packed-refs' );
     if ( -f $packed_refs ) {
-        foreach my $line ( $packed_refs->slurp( chomp => 1 ) ) {
+        for my $line ( $packed_refs->slurp( chomp => 1 ) ) {
             next if $line =~ /^#/;
             next if $line =~ /^\^/;
             my ( $sha1, my $name ) = split ' ', $line;
@@ -163,7 +163,7 @@ sub ref_sha1 {
         return _ensure_sha1_is_sha1( $self, $sha1 );
     }
 
-    foreach my $file ( File::Find::Rule->new->file->in($dir) ) {
+    for my $file ( File::Find::Rule->new->file->in($dir) ) {
         my $ref = 'refs/' . file($file)->relative($dir)->as_foreign('Unix');
         if ( $ref eq $wantref ) {
             my $sha1 = file($file)->slurp
@@ -177,7 +177,7 @@ sub ref_sha1 {
     if ( -f $packed_refs ) {
         my $last_name;
         my $last_sha1;
-        foreach my $line ( $packed_refs->slurp( chomp => 1 ) ) {
+        for my $line ( $packed_refs->slurp( chomp => 1 ) ) {
             next if $line =~ /^#/;
             my ( $sha1, my $name ) = split ' ', $line;
             $sha1 =~ s/^\^//;
@@ -238,7 +238,7 @@ sub get_objects {
 sub get_object_packed {
     my ( $self, $sha1 ) = @_;
 
-    foreach my $pack ( @{$self->packs} ) {
+    for my $pack ( @{$self->packs} ) {
         my ( $kind, $size, $content ) = $pack->get_object($sha1);
         if ( defined($kind) && defined($size) && defined($content) ) {
             return $self->create_object( $sha1, $kind, $size, $content );
@@ -301,7 +301,7 @@ sub all_sha1s {
     my @streams;
     push @streams, $self->loose->all_sha1s;
 
-    foreach my $pack ( @{$self->packs} ) {
+    for my $pack ( @{$self->packs} ) {
         push @streams, $pack->all_sha1s;
     }
 
@@ -407,7 +407,7 @@ sub checkout {
     $directory ||= $self->directory;
     $tree ||= $self->master->tree;
     confess("Missing tree") unless $tree;
-    foreach my $directory_entry ( @{$tree->directory_entries} ) {
+    for my $directory_entry ( @{$tree->directory_entries} ) {
         my $filename = file( $directory, $directory_entry->filename );
         my $sha1     = $directory_entry->sha1;
         my $mode     = $directory_entry->mode;

@@ -27,24 +27,24 @@ sub all_sha1s {
 
     my $pos = $OffsetStart;
     $fh->seek( $pos + $self->global_offset, 0 ) || die $!;
-    foreach my $i ( 0 .. $self->size - 1 ) {
+    for my $i ( 0 .. $self->size - 1 ) {
         $fh->read( my $sha1, $SHA1Size ) || die $!;
         $data[$i] = [ unpack( 'H*', $sha1 ), 0, 0 ];
         $pos += $SHA1Size;
     }
     $fh->seek( $pos + $self->global_offset, 0 ) || die $!;
-    foreach my $i ( 0 .. $self->size - 1 ) {
+    for my $i ( 0 .. $self->size - 1 ) {
         $fh->read( my $crc, $CrcSize ) || die $!;
         $data[$i]->[1] = unpack( 'H*', $crc );
         $pos += $CrcSize;
     }
     $fh->seek( $pos + $self->global_offset, 0 ) || die $!;
-    foreach my $i ( 0 .. $self->size - 1 ) {
+    for my $i ( 0 .. $self->size - 1 ) {
         $fh->read( my $offset, $OffsetSize ) || die $!;
         $data[$i]->[2] = unpack( 'N', $offset );
         $pos += $OffsetSize;
     }
-    foreach my $data (@data) {
+    for my $data (@data) {
         my ( $sha1, $crc, $offset ) = @$data;
         push @sha1s, $sha1;
     }

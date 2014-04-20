@@ -48,7 +48,7 @@ sub BUILD {
 
     my @offsets = (0);
     $fh->seek( $self->global_offset, 0 );
-    foreach my $i ( 0 .. $FanOutCount - 1 ) {
+    for my $i ( 0 .. $FanOutCount - 1 ) {
         $fh->read( my $data, $IdxOffsetSize );
         my $offset = unpack( 'N', $data );
         confess("pack has discontinuous index") if $offset < $offsets[-1];

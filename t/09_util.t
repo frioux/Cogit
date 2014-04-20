@@ -7,7 +7,7 @@ use Path::Class;
 
 use Cogit::Util qw( find_git_dir current_git_dir );
 
-foreach my $directory (qw(test-project test-project-packs test-project-packs2))
+for my $directory (qw(test-project test-project-packs test-project-packs2))
 {
     my $dir = dir($directory);
     my $gd  = find_git_dir( dir($directory) );
@@ -20,7 +20,7 @@ foreach my $directory (qw(test-project test-project-packs test-project-packs2))
 
 }
 
-foreach my $directory (
+for my $directory (
     qw(
     test-util/deep
     test-util/deep/.git
@@ -36,7 +36,7 @@ foreach my $directory (
     );
 }
 
-foreach my $directory (
+for my $directory (
     qw(
     test-util/bare
     test-util/bare/info

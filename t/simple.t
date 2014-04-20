@@ -7,7 +7,7 @@ use Path::Class;
 
 my $checkout_directory = dir('t/checkout');
 
-foreach my $directory (qw(test-project test-project-packs test-project-packs2))
+for my $directory (qw(test-project test-project-packs test-project-packs2))
 {
     my $git = Cogit->new( directory => $directory );
     like( $git->master_sha1, qr/^[a-z0-9]{40}$/ );
