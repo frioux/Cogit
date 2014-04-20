@@ -4,8 +4,8 @@ use warnings;
 package Cogit::Util;
 
 use Sub::Exporter::Progressive -setup => {
-    exports => [qw( current_git_dir find_git_dir is_git_dir )],
-    groups  => { default => [qw( current_git_dir )], },
+   exports => [qw( current_git_dir find_git_dir is_git_dir )],
+   groups  => {default => [qw( current_git_dir )],},
 };
 use Path::Class qw( dir );
 
@@ -35,11 +35,11 @@ Determines if the given C<$dir> has the basic requirements of a Git repository d
 =cut
 
 sub is_git_dir {
-    my ($dir) = @_;
-    return if not -e $dir->subdir('objects');
-    return if not -e $dir->subdir('refs');
-    return if not -e $dir->file('HEAD');
-    return 1;
+   my ($dir) = @_;
+   return if not -e $dir->subdir('objects');
+   return if not -e $dir->subdir('refs');
+   return if not -e $dir->file('HEAD');
+   return 1;
 }
 
 =head2 find_git_dir
@@ -57,18 +57,18 @@ If C<$subdir> is not inside a git repo, returns a false value.
 =cut
 
 sub find_git_dir {
-    my $start = shift;
+   my $start = shift;
 
-    return $start if is_git_dir($start);
+   return $start if is_git_dir($start);
 
-    my $repodir = $start->subdir('.git');
+   my $repodir = $start->subdir('.git');
 
-    return $repodir if -e $repodir and is_git_dir($repodir);
+   return $repodir if -e $repodir and is_git_dir($repodir);
 
-    return find_git_dir( $start->parent )
-      if $start->parent->absolute ne $start->absolute;
+   return find_git_dir($start->parent)
+     if $start->parent->absolute ne $start->absolute;
 
-    return undef;
+   return undef;
 }
 
 =head2 current_git_dir
@@ -86,7 +86,7 @@ If C<$CWD> is not inside any recognisable git repo, will return a false value.
 =cut
 
 sub current_git_dir {
-    return find_git_dir( dir('.') );
+   return find_git_dir(dir('.'));
 }
 
 1;

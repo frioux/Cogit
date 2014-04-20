@@ -8,40 +8,37 @@ use namespace::clean;
 extends 'Cogit::Protocol';
 
 has hostname => (
-    is => 'ro',
-    isa => Str,
-    required => 1,
+   is       => 'ro',
+   isa      => Str,
+   required => 1,
 );
 
 has port => (
-    is => 'ro',
-    isa => Int,
-    default => sub { 9418 },
+   is      => 'ro',
+   isa     => Int,
+   default => sub { 9418 },
 );
 
 has project => (
-    is => 'rw',
-    isa => Str,
-    required => 1,
+   is       => 'rw',
+   isa      => Str,
+   required => 1,
 );
 
 sub connect_socket {
-    my $self = shift;
+   my $self = shift;
 
-    my $socket = IO::Socket::INET->new(
-        PeerAddr => $self->hostname,
-        PeerPort => $self->port,
-        Proto    => 'tcp'
-    ) || die $! . ' ' . $self->hostname . ':' . $self->port;
-    $socket->autoflush(1) || die $!;
-    $self->read_socket($socket);
-    $self->write_socket($socket);
+   my $socket = IO::Socket::INET->new(
+      PeerAddr => $self->hostname,
+      PeerPort => $self->port,
+      Proto    => 'tcp'
+   ) || die $! . ' ' . $self->hostname . ':' . $self->port;
+   $socket->autoflush(1) || die $!;
+   $self->read_socket($socket);
+   $self->write_socket($socket);
 
-    $self->send_line( "git-upload-pack "
-            . $self->project
-            . "\0host="
-            . $self->hostname
-            . "\0" );
+   $self->send_line(
+      "git-upload-pack " . $self->project . "\0host=" . $self->hostname . "\0");
 }
 
 1;
