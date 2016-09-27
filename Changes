@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Fix nested my declaration (Thanks for the heads up Slaven Rezić!)
   - Switch ::Util to Sub::Exporter::Progressive
 
 0.001000  2014-04-19 00:57:35-05:00 CST6CDT

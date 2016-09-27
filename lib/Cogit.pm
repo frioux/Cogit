@@ -130,7 +130,7 @@ sub ref_names {
       for my $line ($packed_refs->slurp(chomp => 1)) {
          next if $line =~ /^#/;
          next if $line =~ /^\^/;
-         my ($sha1, my $name) = split ' ', $line;
+         my ($sha1, $name) = split ' ', $line;
          push @names, $name;
       }
    }
@@ -176,7 +176,7 @@ sub ref_sha1 {
       my $last_sha1;
       for my $line ($packed_refs->slurp(chomp => 1)) {
          next if $line =~ /^#/;
-         my ($sha1, my $name) = split ' ', $line;
+         my ($sha1, $name) = split ' ', $line;
          $sha1 =~ s/^\^//;
          $name ||= $last_name;
 
