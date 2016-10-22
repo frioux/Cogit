@@ -15,4 +15,5 @@ on test => sub {
    requires 'Archive::Extract';
    requires 'Test::More' => '0.88';
    requires 'Test::utf8' => '0.02';
+   requires 'Test::Pod' => '1.51';
 }
