@@ -1,4 +1,7 @@
 Revision history for {{$dist->name}}
+  - Fix warning from all_shas
+    (Thanks Sergey Romanov for the fix and Philippe Bruhat for the report)
+    (Fixes GH#9 and GH#10)
 
 {{$NEXT}}
   - Fix nested my declaration (Thanks for the heads up Slaven Rezić!)
