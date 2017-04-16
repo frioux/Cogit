@@ -1,3 +1,5 @@
+Ingy was here!
+
 Revision history for {{$dist->name}}
   - Fix warning from all_shas
     (Thanks Sergey Romanov for the fix and Philippe Bruhat for the report)
